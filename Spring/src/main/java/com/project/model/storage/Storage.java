@@ -1,6 +1,5 @@
-package com.project.model.employee;
+package com.project.model.storage;
 
-import com.project.model.product.Product;
 import com.project.model.product.ProductStorage;
 import lombok.*;
 import org.hibernate.Hibernate;

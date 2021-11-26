@@ -1,4 +1,4 @@
-package com.project.model.employee;
+package com.project.model.storage;
 
 import lombok.Data;
 

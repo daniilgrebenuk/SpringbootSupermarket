@@ -1,5 +1,9 @@
 package com.project.security;
 
+import com.project.security.jwt.JwtAuthenticationFilter;
+import com.project.security.jwt.JwtAuthorizationFilter;
+import com.project.security.jwt.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenProvider tokenProvider;
 
+  @Autowired
   public SecurityConfiguration(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {
     this.userDetailsService = userDetailsService;
     this.passwordEncoder = passwordEncoder;

@@ -24,6 +24,7 @@ public class User implements UserDetails {
   private String username;
   private String password;
   private Boolean isNonExpired;
+  private String mobileNumber;
 
   @ManyToOne
   @JoinColumn(nullable = false)

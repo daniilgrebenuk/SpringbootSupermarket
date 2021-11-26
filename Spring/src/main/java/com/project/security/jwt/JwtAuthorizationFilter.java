@@ -1,4 +1,4 @@
-package com.project.security;
+package com.project.security.jwt;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.filter.OncePerRequestFilter;

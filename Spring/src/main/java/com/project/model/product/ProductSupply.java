@@ -1,6 +1,6 @@
 package com.project.model.product;
 
-import com.project.model.employee.Supply;
+import com.project.model.storage.Supply;
 import com.project.model.product.keys.ProductSupplyKey;
 import lombok.*;
 import org.hibernate.Hibernate;

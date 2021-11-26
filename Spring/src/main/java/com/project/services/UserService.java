@@ -1,21 +1,30 @@
 package com.project.services;
 
 import com.project.model.credential.User;
+import com.project.repository.credential.RoleRepository;
 import com.project.repository.credential.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
   private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
 
-  public UserService(UserRepository userRepository) {
+  @Autowired
+  public UserService(UserRepository userRepository, RoleRepository roleRepository) {
     this.userRepository = userRepository;
+    this.roleRepository = roleRepository;
   }
 
-  public User findByUsername(String username){
+  public User findByUsernameOrMobileNumber(String usernameOrMobileNumber){
     return userRepository
-        .findByUsername(username)
-        .orElseThrow(()->new UsernameNotFoundException("User doesn't exist"));
+        .findByUsername(usernameOrMobileNumber)
+        .orElse(
+            userRepository
+                .findByMobileNumber(usernameOrMobileNumber)
+                .orElseThrow(()->new UsernameNotFoundException("User doesn't exist!"))
+        );
   }
 }
