@@ -1,0 +1,32 @@
+<body class="container">
+<nav class="nav">
+  <div class="nav-wrapper">
+    <input type="text" class="search" [(ngModel)]="searchOption">
+    <span class="close" (click)="clear()"></span>
+    <div class="add-button">
+      <span class="">Add new</span>
+    </div>
+  </div>
+</nav>
+<div class="cards">
+  <div class="card" *ngFor="let employee of getEmployeeWithSearch()" (click)="openCardInfo(employee)">
+    <img
+      src="{{employee.imageUrl ? employee.imageUrl : '../../assets/images/user.png'}}"
+      alt="">
+    <h2>{{employee.name}} {{employee.surname}}</h2>
+    <h1>{{employee.position}}</h1>
+  </div>
+</div>
+</body>
+
+<div class="modal" id="modal">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-body" id="modal-body">
+    <div (click)="onCloseCardInfo()"><span class="close"></span></div>
+
+    <h2>Employee id: {{currentEmployee?.id}}</h2>
+    <p>Name: {{currentEmployee?.name}}</p>
+    <p>Surname: {{currentEmployee?.surname}}</p>
+    <p>Position: {{currentEmployee?.position}}</p>
+  </div>
+</div>
