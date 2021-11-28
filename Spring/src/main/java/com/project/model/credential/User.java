@@ -1,5 +1,6 @@
 package com.project.model.credential;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,11 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@JsonAutoDetect(
+    fieldVisibility = JsonAutoDetect.Visibility.ANY,
+    getterVisibility = JsonAutoDetect.Visibility.NONE,
+    isGetterVisibility = JsonAutoDetect.Visibility.NONE
+)
 public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +30,6 @@ public class User implements UserDetails {
   private String username;
   private String password;
   private Boolean isNonExpired;
-  private String mobileNumber;
 
   @ManyToOne
   @JoinColumn(nullable = false)
