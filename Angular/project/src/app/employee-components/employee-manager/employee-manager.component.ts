@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Employee} from "../../model/employee";
 import {NgForm} from "@angular/forms";
+import {EmployeeService} from "../../service/employee/employee.service";
+import {Router, RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-employee-manager',
@@ -10,28 +12,20 @@ import {NgForm} from "@angular/forms";
 
 export class EmployeeManagerComponent implements OnInit {
 
-  public arr: Employee[];
+  public arr: Employee[] = [];
   public searchOption: string = "";
   public currentEmployee: Employee | null = null;
 
-  constructor() {
-    this.arr = [
-      {id: 1, name: "Bob", surname: "Top", imageUrl: "", position: "1",user: {id: 1}},
-      {
-        id: 3,
-        name: "Bob",
-        surname: "Top",
-        imageUrl: "https://icdn.lenta.ru/images/2021/04/27/16/20210427163138131/square_320_c09ebae17387b7d6eeb9fa0d42afe5ee.jpg",
-        position: "3",
-        user: {id: 1}
-      },
-      {id: 4, name: "Bob", surname: "Top", imageUrl: "", position: "manager",user: {id: 1}},
-      {id: 4, name: "Bob", surname: "Top", imageUrl: "", position: "manager",user: {id: 1}},
-      {id: 1, name: "Bob", surname: "Top", imageUrl: "", position: "manager",user: {id: 1}},
-    ];
+  constructor(private employeeService: EmployeeService, private rout: Router) {
+
   }
 
   ngOnInit(): void {
+    this.employeeService.getAllEmployee().subscribe(
+      resp => {
+        this.arr = resp
+      }
+    )
   }
 
   openCardInfo(employee: Employee) {
@@ -58,14 +52,14 @@ export class EmployeeManagerComponent implements OnInit {
 
 
   getEmployeeWithSearch(): Employee[] {
-    return this.arr.filter(e => e.surname.includes(this.searchOption) || e.position.includes(this.searchOption));
+    return this.arr.filter(e => e.surname.includes(this.searchOption));
   }
 
   clear() {
     this.searchOption = "";
   }
 
-  onAddClick(){
+  onAddClick() {
     let modal = document.getElementById('modal-add');
     let modalBody = document.getElementById('modal-add-body');
 
@@ -74,6 +68,7 @@ export class EmployeeManagerComponent implements OnInit {
     modalBody!.style.top = "3em";
     modalBody!.style.bottom = "3em";
   }
+
   onCloseAddModal() {
     let modal = document.getElementById('modal-add');
     let modalBody = document.getElementById('modal-add-body');
@@ -84,7 +79,13 @@ export class EmployeeManagerComponent implements OnInit {
     modalBody!.style.bottom = "2em";
   }
 
-  onAddEmployee(addForm: NgForm) {
-
+  onAddEmployee(form: NgForm) {
+    let employee: Employee = form.value;
+    employee.user = {id: form.value.userId, role: {id: 1, authority: null}};
+    employee.salary = Number(employee.salary.toString().replace(/ +/,""));
+    console.log(employee.salary)
+    this.employeeService.addEmployee(employee).subscribe(
+      resp=>console.log(resp)
+    );
   }
 }

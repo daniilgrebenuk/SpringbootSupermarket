@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/registration")
+@RequestMapping("/api/auth")
 @Slf4j
 public class RegistrationController {
   private final UserService userService;
@@ -22,11 +22,10 @@ public class RegistrationController {
     this.userService = userService;
   }
 
-  @PostMapping
-  public ResponseEntity<?> registration(@RequestBody RegistrationForm form){
+  @PostMapping("/registration")
+  public ResponseEntity<?> registration(@RequestBody RegistrationForm form) {
     User user = userService.regNewUserFromRegistrationForm(form);
     log.info(user.toString());
     return ResponseEntity.ok(user);
-
   }
 }

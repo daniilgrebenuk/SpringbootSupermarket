@@ -22,6 +22,7 @@ export class TokenStorageService {
   }
 
   setToken(token: string, saveInLocalMemory: boolean = false) {
+    token = 'Bearer ' + token;
     if (saveInLocalMemory)
       localStorage.setItem(TOKEN_KEY, token);
     else

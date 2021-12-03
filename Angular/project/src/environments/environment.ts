@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   tokenStorageKey: 'token',
-  tokenHeaderKey: 'Authorization'
+  tokenHeaderKey: 'Authorization',
+  authApiUrl: 'http://localhost:8080/api/auth',
+  employeeApiUrl: 'http://localhost:8080/api/employee'
 };
 
 /*

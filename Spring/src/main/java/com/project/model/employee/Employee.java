@@ -1,28 +1,35 @@
 package com.project.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.model.credential.User;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private String surname;
-  private String age;
+  private Long pesel;
+  private String phone;
+  private String imageUrl;
+  private Integer salary;
+  @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
   private LocalDate enrollmentDate;
   private Integer contractInMonth;
-  private Integer salary;
 
 
   @OneToOne(cascade = CascadeType.ALL)

@@ -7,32 +7,32 @@
     <form #addForm="ngForm" (ngSubmit)="onLoginSubmit(addForm)">
       <div class="form-block">
         <label for="username">Username:</label><br>
-        <input type="text" ngModel id="username" name="name" placeholder="Username" required>
+        <input type="text" ngModel id="username" name="username" placeholder="Username" required>
       </div>
 
       <div class="form-block">
         <label for="password">Password:</label><br>
-        <input type="password" ngModel id="password" name="surname" placeholder="Password" required>
+        <input type="password" ngModel id="password" name="password" placeholder="Password" required>
       </div>
 
       <button [disabled]="addForm.invalid" type="submit">Login</button>
     </form>
   </div>
   <div class="form registration" *ngIf="!isSignIn">
-    <form #addForm="ngForm" (ngSubmit)="onLoginSubmit(addForm)">
+    <form #addForm="ngForm" (ngSubmit)="onRegistrationSubmit(addForm)">
       <div class="form-block">
         <label for="usernameR">Username:</label><br>
-        <input type="text" ngModel id="usernameR" name="name" placeholder="Username" required>
+        <input type="text" ngModel id="usernameR" name="username" placeholder="Username" required>
       </div>
 
       <div class="form-block">
         <label for="passwordR">Password:</label><br>
-        <input type="password" ngModel id="passwordR" name="surname" placeholder="Password" required>
+        <input type="password" ngModel id="passwordR" name="password" placeholder="Password" required>
       </div>
 
       <div class="form-block">
         <label for="passwordConfirm">Confirm the password:</label><br>
-        <input type="password" ngModel id="passwordConfirm" name="surname" placeholder="Password" required>
+        <input type="password" ngModel id="passwordConfirm" name="passwordConf" placeholder="Password" required>
       </div>
 
       <button [disabled]="addForm.invalid" type="submit">Login</button>
