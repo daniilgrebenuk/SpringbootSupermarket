@@ -1,5 +1,6 @@
 package com.project.model.storage;
 
+import com.project.model.employee.Employee;
 import com.project.model.product.ProductSupply;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -29,6 +30,18 @@ public class Supply {
   @ToString.Exclude
   private List<ProductSupply> products;
 
+  @ManyToMany
+  @ToString.Exclude
+  private List<Employee> employees;
+
+  private void addProduct(ProductSupply productSupply){
+    products.add(productSupply);
+  }
+
+  private void addAllProduct(Iterable<ProductSupply> productSupplies){
+    productSupplies.forEach(products::add);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -39,6 +52,6 @@ public class Supply {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return getClass().hashCode();
   }
 }

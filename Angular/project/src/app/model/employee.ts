@@ -1,10 +1,14 @@
 import {User} from "./user";
 
 export interface Employee{
-  id: number
+  id: number;
   name: string;
   surname: string;
+  pesel: number;
+  phone: string;
   imageUrl: string;
-  position: string;
   user: User;
+  enrollmentDate: Date;
+  contractInMonth: number;
+  salary: number;
 }

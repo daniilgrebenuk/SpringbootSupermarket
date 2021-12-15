@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,17 +31,19 @@ public class UserService {
     this.passwordEncoder = passwordEncoder;
   }
 
-  public User findByUsernameOrMobileNumber(String usernameOrMobileNumber){
+  public User findByUsernameOrMobileNumber(String usernameOrMobileNumber) {
     return userRepository
         .findByUsername(usernameOrMobileNumber)
-        .orElseGet(()->
+        .orElseGet(() ->
             userRepository
                 .findByMobileNumber(usernameOrMobileNumber)
-                .orElseThrow(()->new UsernameNotFoundException("User doesn't exist!"))
+                .orElseThrow(() -> new UsernameNotFoundException(
+                    "User with username or mobile number :\"" + usernameOrMobileNumber + "\" doesn't exist!")
+                )
         );
   }
 
-  public User regNewUserFromRegistrationForm(RegistrationForm form){
+  public User regNewUserFromRegistrationForm(RegistrationForm form) {
     User user = new User();
     user.setIsNonExpired(true);
     user.setUsername(form.getUsername());
@@ -47,8 +51,22 @@ public class UserService {
     user.setRole(
         roleRepository
             .findByAuthority(Authority.USER)
-            .orElseThrow(()->new DataNotFoundException("Role with current Authority doesn't exist!"))
+            .orElseThrow(
+                () -> new DataNotFoundException("Role with authority:{" + Authority.USER.name() + "} doesn't exist!")
+            )
     );
     return userRepository.save(user);
+  }
+
+  public List<Role> findAllRoles() {
+    return roleRepository.findAll();
+  }
+
+  public User findUserById(Long id) {
+    return userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User with id: " + id + " doesn't exist!"));
+  }
+
+  public User save(User user) {
+    return this.userRepository.save(user);
   }
 }

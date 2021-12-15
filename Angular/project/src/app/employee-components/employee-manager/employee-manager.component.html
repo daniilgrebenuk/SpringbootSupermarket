@@ -2,8 +2,8 @@
 <nav class="nav">
   <div class="nav-wrapper">
     <input type="text" class="search" [(ngModel)]="searchOption">
-    <span class="close" (click)="clear()"></span>
-    <div class="add-button" (click)="onAddClick()">
+    <span class="close" (click)="clearSearch()"></span>
+    <div class="add-button" (click)="openModal()">
       <span class="">Add new</span>
     </div>
   </div>
@@ -14,42 +14,78 @@
       src="{{employee.imageUrl ? employee.imageUrl : '../../assets/images/user.png'}}"
       alt="">
     <h2>{{employee.name}} {{employee.surname}}</h2>
-    <h1>{{employee.position}}</h1>
+    <h1>{{employee.user.role.authority}}</h1>
   </div>
 </div>
 </body>
 
-<div class="modal" id="modal-change">
-  <div class="modal-backdrop"></div>
-  <div class="modal-body" id="modal-change-body">
-    <div (click)="onCloseCardInfo()"><span class="close"></span></div>
-
-    <h2>Employee id: {{currentEmployee?.id}}</h2>
-    <p>Name: {{currentEmployee?.name}}</p>
-    <p>Surname: {{currentEmployee?.surname}}</p>
-    <p>Position: {{currentEmployee?.position}}</p>
-  </div>
-</div>
-
 <div class="modal" id="modal-add">
   <div class="modal-backdrop"></div>
   <div class="modal-body" id="modal-add-body">
-    <div (click)="onCloseAddModal()"><span class="close"></span></div>
-    <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
+    <div (click)="closeModal()"><span class="close"></span></div>
+    <form #form="ngForm" (ngSubmit)="onSaveEmployee(form)">
+      <div class="form-block">
+        <label for="userId">User id:</label><br>
+        <input type="text" ngModel="{{userInfo?.id}}" name="userId" id="userId" placeholder="User id"
+               required>
+      </div>
+
+      <div class="form-block">
+        <label for="role">Role:</label>
+        <select ngModel="{{userInfo?.role?.authority}}" name="role" id="role">
+          <option *ngFor="let role of roles" [ngValue]="role.authority">{{role.authority}}</option>
+        </select>
+      </div>
+
       <div class="form-block">
         <label for="name">Name:</label><br>
-        <input type="text" ngModel name="name" id="name" placeholder="Name" required>
+        <input type="text" ngModel="{{currentEmployee?.name}}" name="name" id="name" placeholder="Name" required>
       </div>
 
       <div class="form-block">
         <label for="surname">Surname:</label><br>
-        <input type="text" ngModel name="surname" id="surname" placeholder="Surname" required>
+        <input type="text" ngModel="{{currentEmployee?.surname}}" name="surname" id="surname" placeholder="Surname"
+               required>
+      </div>
+
+      <div class="form-block">
+        <label for="pesel">Pesel:</label><br>
+        <input type="text" ngModel="{{currentEmployee?.pesel}}" name="pesel" id="pesel" placeholder="Pesel" required>
+      </div>
+
+      <div class="form-block">
+        <label for="phone">Phone:</label><br>
+        <input type="text" ngModel="{{currentEmployee?.phone}}" name="phone" id="phone" placeholder="Phone" required>
+      </div>
+
+      <div class="form-block">
+        <label for="imageUrl">Image url:</label><br>
+        <input type="text" ngModel="{{currentEmployee?.imageUrl}}" name="imageUrl" id="imageUrl"
+               placeholder="Image url">
+      </div>
+
+      <div class="form-block">
+        <label for="salary">Salary:</label><br>
+        <input type="text" ngModel="{{currentEmployee?.salary}}" name="salary" id="salary" placeholder="Salary"
+               required>
+      </div>
+
+      <div class="form-block">
+        <label for="enrollmentDate">Enrollment date:</label><br>
+        <input type="text" ngModel="{{currentEmployee?.enrollmentDate}}" name="enrollmentDate" id="enrollmentDate"
+               placeholder="Enrollment date" required>
+      </div>
+
+      <div class="form-block">
+        <label for="contractInMonth">Contract in month:</label><br>
+        <input type="text" ngModel="{{currentEmployee?.contractInMonth}}" name="contractInMonth" id="contractInMonth"
+               placeholder="Contract in month" required>
       </div>
 
 
-
-      <button type="button">Close</button>
-      <button [disabled]="addForm.invalid" type="submit">Save changes</button>
+      <button type="button" (click)="closeModal()">Close</button>
+      <button type="button" (click)="onDeleteEmployee()">Delete</button>
+      <button [disabled]="form.invalid" type="submit">Save</button>
     </form>
   </div>
 </div>

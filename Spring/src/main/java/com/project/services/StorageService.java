@@ -1,5 +1,6 @@
 package com.project.services;
 
+import com.project.model.storage.Supply;
 import com.project.repository.storage.StorageRepository;
 import com.project.repository.storage.SupplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,5 +15,9 @@ public class StorageService {
   public StorageService(StorageRepository storageRepository, SupplyRepository supplyRepository) {
     this.storageRepository = storageRepository;
     this.supplyRepository = supplyRepository;
+  }
+
+  public Supply createNewSupply(Supply supply){
+    return supplyRepository.save(supply);
   }
 }

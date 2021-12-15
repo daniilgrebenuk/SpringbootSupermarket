@@ -1,27 +1,29 @@
 package com.project.model.product;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false)
+  @NotNull(message = "The product must have a name!")
   private String name;
 
   @ManyToOne
   @JoinColumn(nullable = false)
+  @NotNull(message = "The product must have a category!")
   private Category category;
 
   @OneToMany(mappedBy = "product")
@@ -30,7 +32,9 @@ public class Product {
   @OneToMany(mappedBy = "order")
   private List<ProductOrder> orders;
 
-
+  @Column(nullable = false)
+  @NotNull(message = "The product must have a price!")
+  private Double price;
 
 
   @Override

@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.model.credential.User;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.Objects;
 
 @Entity
@@ -17,23 +17,39 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
+public class Employee implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @NotNull(message = "Enter name")
   private String name;
+
+  @NotNull(message = "Enter surname")
   private String surname;
+
   private Long pesel;
+
+  @NotNull(message = "Enter phone")
   private String phone;
+
+
   private String imageUrl;
+
+  @NotNull(message = "Enter salary")
   private Integer salary;
+
   @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+  @NotNull(message = "Enter enrollment date")
   private LocalDate enrollmentDate;
+
+  @NotNull(message = "Enter the duration of the contract in months")
   private Integer contractInMonth;
 
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(nullable = false)
+  @NotNull(message = "Enter userId and Role")
   private User user;
 
   @Override
