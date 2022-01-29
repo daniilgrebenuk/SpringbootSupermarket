@@ -1,0 +1,52 @@
+<body class="container">
+<div class="categories">
+  <div class="category" [ngClass]="{'selected' : currentCategory === null}" (click)="getAllProductClick()">All product</div>
+  <div class="category" [ngClass]="{'selected':currentCategory?.id===category.id}" *ngFor="let category of categories" (click)="getProductsByCategoryId(category)">
+    {{category.name}}
+  </div>
+  <div class="category add-button" (click)="onAddCategoryClick()">Add</div>
+</div>
+<div class="search-wrapper">
+  <input type="text" class="search" [(ngModel)]="searchOption">
+  <span class="close" (click)="clearSearch()"></span>
+</div>
+<div class="products">
+  <div class="product" *ngFor="let product of getProductsWithSearch()" (click)="onProductCLick(product)">
+    <div class="product-field">{{product.name}}</div>
+    <div class="product-field">{{product.price}}</div>
+  </div>
+  <div class="product" (click)="onAddProductClick()">Add</div>
+</div>
+</body>
+
+<div class="modal" id="modal-add-product">
+  <div class="modal-backdrop"></div>
+  <div class="modal-body" id="modal-add-body">
+    <div (click)="closeModal()"><span class="close"></span></div>
+    <form #form="ngForm" (ngSubmit)="onSaveProduct(form)">
+      <div class="form-block">
+        <label for="name">Name: </label><br>
+        <input type="text" ngModel="{{currentProduct?.name}}" name="name" id="name" placeholder="Name"
+               required>
+      </div>
+
+      <div class="form-block">
+        <label for="category">Role:</label>
+        <select ngModel="{{currentProduct?.category?.name || currentCategory?.name}}" name="category" id="category">
+          <option *ngFor="let category of categories" [ngValue]="category.name">{{category.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-block">
+        <label for="price">Price:</label><br>
+        <input type="text" ngModel="{{currentProduct?.name}}" name="price" id="price" placeholder="Price" required>
+      </div>
+
+
+
+      <button type="button" (click)="closeModal()">Close</button>
+      <button type="button" *ngIf="currentProduct" (click)="onDeleteProduct()">Delete</button>
+      <button [disabled]="form.invalid" type="submit">Save</button>
+    </form>
+  </div>
+</div>
