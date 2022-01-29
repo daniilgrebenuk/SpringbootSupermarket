@@ -9,13 +9,15 @@ import {AuthorizationComponent} from './customer-components/authorization/author
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./service/authorization/auth.interceptor";
 import { ErrorPageComponent } from './employee-components/error-page/error-page.component';
+import { ProductManagerComponent } from './employee-components/product-manager/product-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeManagerComponent,
     AuthorizationComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    ProductManagerComponent
   ],
   imports: [
     BrowserModule,

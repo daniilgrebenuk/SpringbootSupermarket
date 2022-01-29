@@ -115,13 +115,13 @@ class EmployeeControllerTest {
         .andDo(print())
         .andExpectAll(
             status().isBadRequest(),
-            content().string(containsString("Enter name")),
-            content().string(containsString("Enter surname")),
-            content().string(containsString("Enter phone")),
-            content().string(containsString("Enter salary")),
-            content().string(containsString("Enter enrollment date")),
-            content().string(containsString("Enter the duration of the contract in months")),
-            content().string(containsString("Enter userId and Role"))
+            content().string(containsString("\"name\":\"Enter name\"")),
+            content().string(containsString("\"surname\":\"Enter surname\"")),
+            content().string(containsString("\"phone\":\"Enter phone\"")),
+            content().string(containsString("\"salary\":\"Enter salary\"")),
+            content().string(containsString("\"enrollmentDate\":\"Enter enrollment date\"")),
+            content().string(containsString("\"contractInMonth\":\"Enter the duration of the contract in months\"")),
+            content().string(containsString("\"user\":\"Enter userId and Role\""))
         );
   }
 
@@ -230,13 +230,13 @@ class EmployeeControllerTest {
         .andDo(print())
         .andExpectAll(
             status().isBadRequest(),
-            content().string(containsString("Enter name")),
-            content().string(containsString("Enter surname")),
-            content().string(containsString("Enter phone")),
-            content().string(containsString("Enter salary")),
-            content().string(containsString("Enter enrollment date")),
-            content().string(containsString("Enter the duration of the contract in months")),
-            content().string(containsString("Enter userId and Role"))
+            content().string(containsString("\"name\":\"Enter name\"")),
+            content().string(containsString("\"surname\":\"Enter surname\"")),
+            content().string(containsString("\"phone\":\"Enter phone\"")),
+            content().string(containsString("\"salary\":\"Enter salary\"")),
+            content().string(containsString("\"enrollmentDate\":\"Enter enrollment date\"")),
+            content().string(containsString("\"contractInMonth\":\"Enter the duration of the contract in months\"")),
+            content().string(containsString("\"user\":\"Enter userId and Role\""))
         );
   }
 

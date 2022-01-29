@@ -59,7 +59,7 @@ public class EmployeeService {
 
   public boolean delete(Long id){
     employeeRepository.findById(id).orElseThrow(
-        ()->new DataNotFoundException("User with id " + id + " doesn't exist!")
+        ()->new DataNotFoundException("Employee with id " + id + " doesn't exist!")
     );
     employeeRepository.deleteById(id);
     return true;

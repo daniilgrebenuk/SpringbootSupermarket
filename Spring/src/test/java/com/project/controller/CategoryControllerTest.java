@@ -15,11 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,6 +45,26 @@ class CategoryControllerTest {
     mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
     correctCategory = new Category(1L, "Vegetables");
+  }
+
+  @Test
+  @DisplayName("<= HttpStatus.OK when get all Categories =>")
+  void getAllCategories() throws Exception{
+    List<Category> categories = List.of(
+        new Category(1L, "123"),
+        new Category(2L, "123"),
+        new Category(3L, "123"),
+        new Category(4L, "123")
+    );
+    when(service.findAll()).thenReturn(categories);
+
+    mockMvc
+        .perform(get(defaultUri + "/all"))
+        .andDo(print())
+        .andExpectAll(
+            status().isOk(),
+            content().string(containsString(mapper.writeValueAsString(categories)))
+        );
   }
 
   @Test

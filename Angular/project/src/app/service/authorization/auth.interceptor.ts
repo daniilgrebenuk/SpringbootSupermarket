@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor{
       catchError((err: HttpErrorResponse) =>{
         if(err.status === 403) {
           if (token != null) {
-            this.rout.navigateByUrl("employee/error")
+            this.rout.navigateByUrl("error")
           } else {
             this.rout.navigateByUrl("authorization")
           }

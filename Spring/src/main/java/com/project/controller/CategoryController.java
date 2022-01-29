@@ -24,6 +24,11 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
+  @GetMapping("/all")
+  public ResponseEntity<?> getAllCategories(){
+    return ResponseEntity.ok(categoryService.findAll());
+  }
+
   @PostMapping("/add")
   //@PreAuthorize()
   public ResponseEntity<?> createNewCategory(@RequestBody @Valid Category category, Errors errors){

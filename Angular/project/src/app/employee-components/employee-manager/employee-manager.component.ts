@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Employee} from "../../model/employee";
 import {NgForm} from "@angular/forms";
-import {EmployeeService} from "../../service/employee/employee.service";
+import {EmployeeService} from "../../service/company/employee.service";
 import {Router, RouterModule} from "@angular/router";
 import {Role, User} from "../../model/user";
 
 @Component({
-  selector: 'app-employee-manager',
+  selector: 'app-company-manager',
   templateUrl: './employee-manager.component.html',
   styleUrls: ['./employee-manager.component.css']
 })

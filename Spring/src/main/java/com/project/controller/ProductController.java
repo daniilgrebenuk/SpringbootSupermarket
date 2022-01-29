@@ -1,7 +1,6 @@
 package com.project.controller;
 
 import com.project.model.exception.DataNotFoundException;
-import com.project.model.product.Category;
 import com.project.model.product.Product;
 import com.project.services.ProductService;
 import lombok.extern.slf4j.Slf4j;

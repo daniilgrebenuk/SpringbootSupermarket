@@ -57,4 +57,10 @@ public class ProductService {
       throw new DataNotFoundException("Category is empty or does not exist");
     return products;
   }
+
+  public boolean delete(Long id){
+    Product product = findByProductId(id);
+    productRepository.delete(product);
+    return true;
+  }
 }

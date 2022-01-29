@@ -10,11 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,14 +41,7 @@ public class EmployeeController {
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<?> addEmployee(@RequestBody @Valid Employee employee, Errors errors) {
     if (errors.hasErrors()) {
-      return new ResponseEntity<>(
-          errors
-              .getFieldErrors()
-              .stream()
-              .map(DefaultMessageSourceResolvable::getDefaultMessage)
-              .collect(Collectors.toList()),
-          HttpStatus.BAD_REQUEST
-      );
+      return getResponseEntityWithErrors(errors);
     }
 
     try {
@@ -62,7 +58,7 @@ public class EmployeeController {
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<?> updateEmployee(@RequestBody @Valid Employee employee, Errors errors) {
     if (errors.hasErrors()) {
-      return new ResponseEntity<>(errors.getFieldErrors().stream().map(f -> f.getDefaultMessage()).collect(Collectors.toList()), HttpStatus.BAD_REQUEST);
+      return getResponseEntityWithErrors(errors);
     }
 
     try {
@@ -91,5 +87,20 @@ public class EmployeeController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
     return ResponseEntity.ok().build();
+  }
+
+  private ResponseEntity<Map<String, String>> getResponseEntityWithErrors(Errors errors) {
+    return new ResponseEntity<>(
+        errors
+            .getFieldErrors()
+            .stream()
+            .collect(Collectors.toMap(
+                FieldError::getField,
+                f -> Optional
+                    .ofNullable(f.getDefaultMessage())
+                    .orElse(f.getObjectName()))
+            ),
+        HttpStatus.BAD_REQUEST
+    );
   }
 }

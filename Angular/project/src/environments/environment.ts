@@ -7,7 +7,9 @@ export const environment = {
   tokenStorageKey: 'token',
   tokenHeaderKey: 'Authorization',
   authApiUrl: 'http://localhost:8080/api/auth',
-  employeeApiUrl: 'http://localhost:8080/api/employee'
+  employeeApiUrl: 'http://localhost:8080/api/employee',
+  productApiUrl: 'http://localhost:8080/api/product',
+  categoryApiUrl: 'http://localhost:8080/api/category'
 };
 
 /*

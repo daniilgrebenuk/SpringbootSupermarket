@@ -32,7 +32,7 @@ public class JwtTokenProvider {
   @Value("${jwt.token.refresh}")
   private long expireRefreshTokenInDay;
 
-  public Map<String, String> createToken(User user, String requestUrl){
+  public Map<String, String> createToken(User user, String requestUrl) {
     Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
     String accessToken = JWT.create()
         .withSubject(user.getUsername())
@@ -43,17 +43,17 @@ public class JwtTokenProvider {
 
     String refreshToken = JWT.create()
         .withSubject(user.getUsername())
-        .withExpiresAt(new Date(System.currentTimeMillis() + expireRefreshTokenInDay*60*1000))
+        .withExpiresAt(new Date(System.currentTimeMillis() + expireRefreshTokenInDay * 60 * 1000))
         .withIssuer(requestUrl)
         .sign(algorithm);
 
-    Map<String,String> map = new HashMap<>();
+    Map<String, String> map = new HashMap<>();
     map.put("accessToken", accessToken);
     map.put("refreshToken", refreshToken);
     return map;
   }
 
-  public void verifyTokenAndLoginIfSuccess(String token){
+  public void verifyTokenAndLoginIfSuccess(String token) {
     Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
     JWTVerifier verifier = JWT.require(algorithm).build();
     DecodedJWT decodedJWT = verifier.verify(token);
