@@ -1,10 +1,10 @@
 package com.project.model.storage;
 
+import com.project.model.employee.Employee;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +15,16 @@ import java.util.Objects;
 public class SupplyEmployee {
   @EmbeddedId
   private SupplyEmployeeKey id;
+
+  @ManyToOne
+  @MapsId("employeeId")
+  @JoinColumn(name = "employee_id")
+  private Employee employee;
+
+  @ManyToOne
+  @MapsId("supplyId")
+  @JoinColumn(name = "supply_id")
+  private Supply supplyEmployee;
 
   @Override
   public boolean equals(Object o) {

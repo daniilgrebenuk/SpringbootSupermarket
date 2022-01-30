@@ -1,6 +1,5 @@
 package com.project.model.storage;
 
-import com.project.model.employee.Employee;
 import com.project.model.product.ProductSupply;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -26,20 +25,30 @@ public class Supply {
 
   private LocalDate date;
 
-  @OneToMany(mappedBy = "supply")
+  @OneToMany(mappedBy = "supplyProduct")
   @ToString.Exclude
   private List<ProductSupply> products;
 
-  @ManyToMany
+  @OneToMany(mappedBy = "supplyEmployee")
   @ToString.Exclude
-  private List<Employee> employees;
+  private List<SupplyEmployee> employees;
 
-  private void addProduct(ProductSupply productSupply){
+  private boolean accepted;
+
+  public void addProduct(ProductSupply productSupply){
     products.add(productSupply);
   }
 
-  private void addAllProduct(Iterable<ProductSupply> productSupplies){
+  public void addAllProduct(Iterable<ProductSupply> productSupplies){
     productSupplies.forEach(products::add);
+  }
+
+  public void addEmployee(SupplyEmployee supplyEmployee) {
+    employees.add(supplyEmployee);
+  }
+
+  public void addAllEmployee(Iterable<SupplyEmployee> supplyEmployees) {
+    supplyEmployees.forEach(employees::add);
   }
 
   @Override

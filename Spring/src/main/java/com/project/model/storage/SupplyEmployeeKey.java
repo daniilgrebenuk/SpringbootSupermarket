@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Data
 public class SupplyEmployeeKey implements Serializable {
 
-  @Column(name = "supply_Id")
+  @Column(name = "supply_id")
   private Long supplyId;
-  @Column(name = "employee_Id")
+  @Column(name = "employee_id")
   private Long employeeId;
 }

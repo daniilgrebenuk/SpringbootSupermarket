@@ -4,10 +4,11 @@ import com.project.model.storage.Supply;
 import com.project.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/supply")
@@ -20,8 +21,25 @@ public class SupplyController {
   }
 
   @PostMapping("/create")
+  //@PreAuthorize()
   public ResponseEntity<?> createNewSupply(@RequestBody Supply supply){
     supply = storageService.createNewSupply(supply);
     return ResponseEntity.ok(supply);
+  }
+
+  @PutMapping("/add-employee")
+  //@PreAuthorize()
+  public ResponseEntity<?> addEmployee(@RequestBody Map<String, Long> body){
+    storageService.addEmployeeToSupply(body.get("supply_id"), body.get("user_id"));
+    return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/get/current")
+  //@PreAuthorize()
+  public ResponseEntity<?> getAllSupplyForCurrentUser(){
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return ResponseEntity.ok(
+        storageService.getAllSupplyByUsername(username)
+    );
   }
 }

@@ -26,7 +26,7 @@ public class ProductSupply {
   @ManyToOne
   @MapsId("supplyId")
   @JoinColumn(name = "supply_id")
-  private Supply supply;
+  private Supply supplyProduct;
 
   private Integer amount;
 
