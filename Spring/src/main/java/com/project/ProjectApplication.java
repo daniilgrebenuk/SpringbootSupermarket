@@ -1,5 +1,9 @@
 package com.project;
 
+import com.project.model.credential.Authority;
+import com.project.model.credential.Role;
+import com.project.repository.credential.RoleRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +21,21 @@ public class ProjectApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(ProjectApplication.class, args);
+  }
+
+  @Bean
+  CommandLineRunner run(RoleRepository repository){
+    return args -> loadAllAuthority(repository);
+  }
+
+  private void loadAllAuthority(RoleRepository repository){
+    Arrays
+        .stream(Authority.values())
+        .forEach(a->{
+          if (!repository.existsByAuthority(a)){
+            repository.save(new Role(null, a));
+          }
+        });
   }
 
   @Bean

@@ -10,9 +10,9 @@ public interface SupplyRepository extends JpaRepository<Supply, Long> {
 
   String SQL_FOR_GET_ALL_BY_USERNAME =
       "SELECT s.* " +
-      "FROM Supply s JOIN SupplyEmployee se ON s.id = se.supply_id " +
-                    "JOIN Employee e ON e.id = se.employee_id " +
-                    "JOIN User u ON e.user_id = u.id " +
+      "FROM supply s JOIN supply_employee se ON s.id = se.supply_id " +
+                    "JOIN employee e ON e.id = se.employee_id " +
+                    "JOIN user u ON e.user_id = u.id " +
       "WHERE u.username = ?1";
 
 

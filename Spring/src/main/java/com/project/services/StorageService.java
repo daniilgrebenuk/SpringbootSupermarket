@@ -34,6 +34,10 @@ public class StorageService {
     return supplyRepository.getAllByUsername(username);
   }
 
+  public List<Supply> getAllSupply() {
+    return supplyRepository.findAll();
+  }
+
   public void addEmployeeToSupply(Long supplyId, Long userId) {
     Supply supply = supplyRepository
         .findById(supplyId)

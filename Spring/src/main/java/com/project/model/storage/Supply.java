@@ -1,5 +1,6 @@
 package com.project.model.storage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.product.ProductSupply;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -27,10 +28,12 @@ public class Supply {
 
   @OneToMany(mappedBy = "supplyProduct")
   @ToString.Exclude
+  @JsonIgnore
   private List<ProductSupply> products;
 
   @OneToMany(mappedBy = "supplyEmployee")
   @ToString.Exclude
+  @JsonIgnore
   private List<SupplyEmployee> employees;
 
   private boolean accepted;

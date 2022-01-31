@@ -20,6 +20,21 @@ public class SupplyController {
     this.storageService = storageService;
   }
 
+  @GetMapping("/get/current")
+  //@PreAuthorize()
+  public ResponseEntity<?> getAllSupplyForCurrentUser(){
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return ResponseEntity.ok(
+        storageService.getAllSupplyByUsername(username)
+    );
+  }
+
+  @GetMapping("/all")
+  //@PreAuthorize()
+  public ResponseEntity<?> getAllSupply(){
+    return ResponseEntity.ok(storageService.getAllSupply());
+  }
+
   @PostMapping("/create")
   //@PreAuthorize()
   public ResponseEntity<?> createNewSupply(@RequestBody Supply supply){
@@ -34,12 +49,5 @@ public class SupplyController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/get/current")
-  //@PreAuthorize()
-  public ResponseEntity<?> getAllSupplyForCurrentUser(){
-    String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    return ResponseEntity.ok(
-        storageService.getAllSupplyByUsername(username)
-    );
-  }
+
 }
