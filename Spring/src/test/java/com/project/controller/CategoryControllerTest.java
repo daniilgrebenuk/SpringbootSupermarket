@@ -3,7 +3,7 @@ package com.project.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.model.product.Category;
 import com.project.model.product.Product;
-import com.project.services.CategoryService;
+import com.project.services.implementation.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class CategoryControllerTest {
   private CategoryController controller;
 
   @Mock
-  private CategoryService service;
+  private CategoryServiceImpl service;
 
   private MockMvc mockMvc;
   private final ObjectMapper mapper = new ObjectMapper();

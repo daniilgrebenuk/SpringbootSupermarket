@@ -4,6 +4,7 @@ import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Category;
 import com.project.model.product.Product;
 import com.project.repository.product.ProductRepository;
+import com.project.services.implementation.ProductServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,9 +24,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("<= ProductService Test =>")
-class ProductServiceTest {
+class ProductServiceImplTest {
   @InjectMocks
-  private ProductService productService;
+  private ProductServiceImpl productServiceImpl;
 
   @Mock
   private ProductRepository productRepository;
@@ -37,8 +38,8 @@ class ProductServiceTest {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(product));
 
     assertAll(
-        () -> assertThat(productService.findByProductId(1L)).isEqualTo(product),
-        () -> assertDoesNotThrow(() -> productService.findByProductId(1L))
+        () -> assertThat(productServiceImpl.findByProductId(1L)).isEqualTo(product),
+        () -> assertDoesNotThrow(() -> productServiceImpl.findByProductId(1L))
     );
   }
 
@@ -47,7 +48,7 @@ class ProductServiceTest {
   void findProductWithIncorrectId() {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-    assertThatThrownBy(() -> productService.findByProductId(1L)).isInstanceOf(DataNotFoundException.class);
+    assertThatThrownBy(() -> productServiceImpl.findByProductId(1L)).isInstanceOf(DataNotFoundException.class);
   }
 
   @Test
@@ -59,7 +60,7 @@ class ProductServiceTest {
     Product product3 = new Product(3L, "Tomato3", category, List.of(), List.of(), 200D);
     List<Product> products = Arrays.asList(product1, product2, product3);
     when(productRepository.findAll()).thenReturn(products);
-    assertThat(productService.findAll()).isEqualTo(products);
+    assertThat(productServiceImpl.findAll()).isEqualTo(products);
   }
 
   @Test
@@ -67,7 +68,7 @@ class ProductServiceTest {
   void addProduct(){
     Product product = new Product(1L, null, null, null, null, null);
     when(productRepository.save(any(Product.class))).thenReturn(product);
-    assertThat(productService.add(product)).isEqualTo(product);
+    assertThat(productServiceImpl.add(product)).isEqualTo(product);
   }
 
   @Test
@@ -77,8 +78,8 @@ class ProductServiceTest {
 
     when(productRepository.save(any(Product.class))).thenReturn(product);
     assertAll(
-        () -> assertDoesNotThrow(() -> productService.update(product)),
-        () -> assertThat(productService.update(product)).isEqualTo(product)
+        () -> assertDoesNotThrow(() -> productServiceImpl.update(product)),
+        () -> assertThat(productServiceImpl.update(product)).isEqualTo(product)
     );
   }
 
@@ -87,7 +88,7 @@ class ProductServiceTest {
   void updateProductWithoutId() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> productService.update(new Product())
+        () -> productServiceImpl.update(new Product())
     );
   }
 
@@ -100,7 +101,7 @@ class ProductServiceTest {
     Product product3 = new Product(3L, "Tomato3", category, List.of(), List.of(), 200D);
     when(productRepository.findAllByCategoryId(any(Long.class))).thenReturn(Arrays.asList(product1, product2, product3));
 
-    List<Product> products = productService.findAllByCategoryId(1L);
+    List<Product> products = productServiceImpl.findAllByCategoryId(1L);
     assertAll(
         () -> assertThat(products.stream().filter(p -> p.getCategory().getId().equals(1L)).count()).isEqualTo(3),
         () -> assertThat(products.get(0)).isEqualTo(product1),
@@ -116,7 +117,7 @@ class ProductServiceTest {
 
     assertThrows(
         DataNotFoundException.class,
-        () -> productService.findAllByCategoryId(1L)
+        () -> productServiceImpl.findAllByCategoryId(1L)
     );
   }
 
@@ -127,8 +128,8 @@ class ProductServiceTest {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(product));
 
     assertAll(
-        () -> assertDoesNotThrow(() -> productService.delete(1L)),
-        () -> assertThat(productService.delete(1L)).isTrue()
+        () -> assertDoesNotThrow(() -> productServiceImpl.delete(1L)),
+        () -> assertThat(productServiceImpl.delete(1L)).isTrue()
     );
   }
 
@@ -137,6 +138,6 @@ class ProductServiceTest {
   void deleteProductThatDoesntExist() {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-    assertThatThrownBy(() -> productService.delete(1L)).isInstanceOf(DataNotFoundException.class);
+    assertThatThrownBy(() -> productServiceImpl.delete(1L)).isInstanceOf(DataNotFoundException.class);
   }
 }

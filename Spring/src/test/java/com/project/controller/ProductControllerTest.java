@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Category;
 import com.project.model.product.Product;
-import com.project.services.ProductService;
+import com.project.services.implementation.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class ProductControllerTest {
   private ProductController controller;
 
   @Mock
-  private ProductService service;
+  private ProductServiceImpl service;
 
   private MockMvc mockMvc;
   private final ObjectMapper mapper = new ObjectMapper();

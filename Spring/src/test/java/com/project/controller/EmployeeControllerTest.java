@@ -8,7 +8,7 @@ import com.project.model.credential.Role;
 import com.project.model.credential.User;
 import com.project.model.employee.Employee;
 import com.project.model.exception.DataNotFoundException;
-import com.project.services.EmployeeService;
+import com.project.services.implementation.EmployeeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +45,7 @@ class EmployeeControllerTest {
   private EmployeeController employeeController;
 
   @Mock
-  private EmployeeService employeeService;
+  private EmployeeServiceImpl employeeServiceImpl;
 
   private MockMvc mockMvc;
   private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
@@ -71,7 +71,7 @@ class EmployeeControllerTest {
         Arrays.asList(employee1, employee2, employee3)
     );
 
-    when(employeeService.findAll()).thenReturn(employees);
+    when(employeeServiceImpl.findAll()).thenReturn(employees);
 
     mockMvc
         .perform(get(defaultUri + "/all"))
@@ -89,7 +89,7 @@ class EmployeeControllerTest {
   void addCorrectEmployee() throws Exception {
     String employeeForRequest = mapper.writeValueAsString(correctEmployee);
     correctEmployee.setId(1L);
-    when(employeeService.add(any(Employee.class))).thenReturn(correctEmployee);
+    when(employeeServiceImpl.add(any(Employee.class))).thenReturn(correctEmployee);
 
     mockMvc
         .perform(
@@ -128,7 +128,7 @@ class EmployeeControllerTest {
   @Test
   @DisplayName("<= HttpStatus.BAD_REQUEST when add Employee with id =>")
   void addEmployeeWithId() throws Exception {
-    when(employeeService.add(any(Employee.class))).thenThrow(new IllegalArgumentException("Unable to add employee with existing id"));
+    when(employeeServiceImpl.add(any(Employee.class))).thenThrow(new IllegalArgumentException("Unable to add employee with existing id"));
 
     mockMvc
         .perform(
@@ -146,7 +146,7 @@ class EmployeeControllerTest {
   @Test
   @DisplayName("<= HttpStatus.BAD_REQUEST when add Employee without User =>")
   void addEmployeeWithoutUserOrWithIncorrectUserId() throws Exception {
-    when(employeeService.add(any(Employee.class))).thenThrow(new DataNotFoundException("User with id: 11 doesn't exist!"));
+    when(employeeServiceImpl.add(any(Employee.class))).thenThrow(new DataNotFoundException("User with id: 11 doesn't exist!"));
 
     mockMvc
         .perform(
@@ -167,7 +167,7 @@ class EmployeeControllerTest {
   void updateCorrectEmployee() throws Exception {
     correctEmployee.setId(1L);
 
-    when(employeeService.update(any(Employee.class))).thenReturn(correctEmployee);
+    when(employeeServiceImpl.update(any(Employee.class))).thenReturn(correctEmployee);
     mockMvc
         .perform(
             put(defaultUri + "/update")
@@ -185,7 +185,7 @@ class EmployeeControllerTest {
   @DisplayName("<= HttpStatus.BAD_REQUEST when update Employee without Id =>")
   void updateEmployeeWithoutId() throws Exception {
 
-    when(employeeService.update(any(Employee.class))).thenThrow(new IllegalArgumentException("Unable to save employee without id"));
+    when(employeeServiceImpl.update(any(Employee.class))).thenThrow(new IllegalArgumentException("Unable to save employee without id"));
 
     mockMvc
         .perform(
@@ -203,7 +203,7 @@ class EmployeeControllerTest {
   @Test
   @DisplayName("<= HttpStatus.BAD_REQUEST when add Employee without User =>")
   void updateEmployeeWithoutUserOrWithIncorrectUserId() throws Exception {
-    when(employeeService.update(any(Employee.class))).thenThrow(new DataNotFoundException("User with id: 1 doesn't exist!"));
+    when(employeeServiceImpl.update(any(Employee.class))).thenThrow(new DataNotFoundException("User with id: 1 doesn't exist!"));
 
     mockMvc
         .perform(
@@ -247,7 +247,7 @@ class EmployeeControllerTest {
     Role role2 = new Role(2L, Authority.ADMIN);
     List<Role> roles = new ArrayList<>(Arrays.asList(role1, role2));
 
-    when(employeeService.roles()).thenReturn(roles);
+    when(employeeServiceImpl.roles()).thenReturn(roles);
 
     mockMvc
         .perform(
@@ -265,7 +265,7 @@ class EmployeeControllerTest {
   @Test
   @DisplayName("<= HttpStatus.OK when delete Employee =>")
   void deleteEmployee() throws Exception{
-    when(employeeService.delete(any(Long.class))).thenReturn(true);
+    when(employeeServiceImpl.delete(any(Long.class))).thenReturn(true);
 
     mockMvc
         .perform(delete(defaultUri + "/delete?id=1"))
@@ -278,7 +278,7 @@ class EmployeeControllerTest {
   @Test
   @DisplayName("<= HttpStatus.BAD_REQUEST when delete Employee which does not exist=>")
   void deleteEmployeeWhichDoesNotExist() throws Exception {
-    when(employeeService.delete(any(Long.class))).thenThrow( new DataNotFoundException("User with id 1 doesn't exist!"));
+    when(employeeServiceImpl.delete(any(Long.class))).thenThrow( new DataNotFoundException("User with id 1 doesn't exist!"));
     mockMvc
         .perform(delete(defaultUri + "/delete?id=1"))
         .andDo(print())

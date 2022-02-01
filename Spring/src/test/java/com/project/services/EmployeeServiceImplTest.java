@@ -6,7 +6,7 @@ import com.project.model.credential.User;
 import com.project.model.employee.Employee;
 import com.project.model.exception.DataNotFoundException;
 import com.project.repository.employee.EmployeeRepository;
-import org.junit.jupiter.api.Disabled;
+import com.project.services.implementation.EmployeeServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,10 +27,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("<= EmployeeService Test =>")
-class EmployeeServiceTest {
+class EmployeeServiceImplTest {
 
   @InjectMocks
-  private EmployeeService employeeService;
+  private EmployeeServiceImpl employeeServiceImpl;
 
   @Mock
   private EmployeeRepository employeeRepository;
@@ -48,10 +48,10 @@ class EmployeeServiceTest {
     when(employeeRepository.findAll()).thenReturn(Arrays.asList(employee1, employee2, employee3));
 
     assertAll(
-        () -> assertThat(employeeService.findAll().size()).isEqualTo(3),
-        () -> assertThat(employeeService.findAll().get(0)).isEqualTo(employee1),
-        () -> assertThat(employeeService.findAll().get(1)).isEqualTo(employee2),
-        () -> assertThat(employeeService.findAll().get(2)).isEqualTo(employee3)
+        () -> assertThat(employeeServiceImpl.findAll().size()).isEqualTo(3),
+        () -> assertThat(employeeServiceImpl.findAll().get(0)).isEqualTo(employee1),
+        () -> assertThat(employeeServiceImpl.findAll().get(1)).isEqualTo(employee2),
+        () -> assertThat(employeeServiceImpl.findAll().get(2)).isEqualTo(employee3)
     );
   }
 
@@ -59,7 +59,7 @@ class EmployeeServiceTest {
   @DisplayName("<= find all employee when is empty =>")
   void findAllEmployeeWhenIsEmpty() {
     when(employeeRepository.findAll()).thenReturn(new ArrayList<>());
-    assertThat(employeeService.findAll()).isEmpty();
+    assertThat(employeeServiceImpl.findAll()).isEmpty();
   }
 
   @Test
@@ -74,7 +74,7 @@ class EmployeeServiceTest {
     when(userService.save(any(User.class))).thenReturn(user);
     when(userService.findUserById(any(Long.class))).thenReturn(user);
 
-    assertThat(employeeService.update(returnEmployee)).isEqualTo(returnEmployee);
+    assertThat(employeeServiceImpl.update(returnEmployee)).isEqualTo(returnEmployee);
   }
 
   @Test
@@ -82,7 +82,7 @@ class EmployeeServiceTest {
   void updateEmployeeWithoutId() {
     Employee forTest = new Employee(null, "Bob", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, null);
 
-    assertThatIllegalArgumentException().isThrownBy(() -> employeeService.update(forTest));
+    assertThatIllegalArgumentException().isThrownBy(() -> employeeServiceImpl.update(forTest));
   }
 
   @Test
@@ -98,14 +98,14 @@ class EmployeeServiceTest {
     when(userService.findUserById(any(Long.class))).thenReturn(user);
 
     Employee forTest = new Employee(null, "Bob", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, user);
-    assertThat(employeeService.add(forTest)).isEqualTo(returnEmployee);
+    assertThat(employeeServiceImpl.add(forTest)).isEqualTo(returnEmployee);
   }
 
   @Test
   @DisplayName("<= add employee with Id =>")
   void addEmployeeWithId() {
     Employee forTest = new Employee(1L, "Bob", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, null);
-    assertThatIllegalArgumentException().isThrownBy(() -> employeeService.add(forTest));
+    assertThatIllegalArgumentException().isThrownBy(() -> employeeServiceImpl.add(forTest));
 
   }
 
@@ -116,8 +116,8 @@ class EmployeeServiceTest {
     when(employeeRepository.findById(any(Long.class))).thenReturn(Optional.of(returnEmployee));
 
     assertAll(
-        () -> assertDoesNotThrow(() -> employeeService.delete(1L)),
-        () -> assertThat(employeeService.delete(1L)).isTrue()
+        () -> assertDoesNotThrow(() -> employeeServiceImpl.delete(1L)),
+        () -> assertThat(employeeServiceImpl.delete(1L)).isTrue()
     );
   }
 
@@ -126,6 +126,15 @@ class EmployeeServiceTest {
   void deleteEmployeeThatDoesNotExists() {
     when(employeeRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-    assertThatThrownBy(() -> employeeService.delete(1L)).isInstanceOf(DataNotFoundException.class);
+    assertThatThrownBy(() -> employeeServiceImpl.delete(1L)).isInstanceOf(DataNotFoundException.class);
+  }
+
+  @Test
+  @DisplayName("<= find all Roles =>")
+  void findAllRoles(){
+    List<Role> roles = List.of(new Role(1L,Authority.USER), new Role(2L, Authority.ADMIN));
+    when(userService.findAllRoles()).thenReturn(roles);
+
+    assertThat(employeeServiceImpl.roles()).isEqualTo(roles);
   }
 }

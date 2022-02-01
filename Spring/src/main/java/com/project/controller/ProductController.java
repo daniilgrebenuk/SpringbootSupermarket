@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Product;
 import com.project.services.ProductService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/product")
+@RequiredArgsConstructor
 @Slf4j
 public class ProductController {
   private final ProductService productService;
 
-  public ProductController(ProductService productService) {
-    this.productService = productService;
-  }
 
   @GetMapping("/all")
   //@PreAuthorize()

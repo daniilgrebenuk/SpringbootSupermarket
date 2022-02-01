@@ -4,8 +4,8 @@ import com.project.model.credential.Role;
 import com.project.model.employee.Employee;
 import com.project.model.exception.DataNotFoundException;
 import com.project.services.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +14,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,14 +21,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/employee")
+@RequiredArgsConstructor
 @Slf4j
 public class EmployeeController {
 
   private final EmployeeService employeeService;
-
-  public EmployeeController(EmployeeService employeeService) {
-    this.employeeService = employeeService;
-  }
 
   @GetMapping("/all")
   @PreAuthorize("hasAuthority('ADMIN')")
