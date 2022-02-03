@@ -121,7 +121,6 @@ public class SupplyController {
       log.warn(e.getMessage());
       return ResponseEntity.badRequest().body("Not correct path variable");
     }
-
     return ResponseEntity.ok().build();
   }
 
