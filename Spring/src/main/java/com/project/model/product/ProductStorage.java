@@ -1,5 +1,6 @@
 package com.project.model.product;
 
+import com.project.model.product.helper.ProductContainer;
 import com.project.model.storage.Storage;
 import com.project.model.product.keys.ProductStorageKey;
 import lombok.*;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class ProductStorage {
+public class ProductStorage implements ProductContainer {
   @EmbeddedId
   private ProductStorageKey id;
 

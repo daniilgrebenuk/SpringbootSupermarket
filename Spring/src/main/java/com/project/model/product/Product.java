@@ -1,5 +1,6 @@
 package com.project.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -17,6 +18,7 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   @Column(nullable = false)
   @NotNull(message = "The product must have a name!")
   private String name;
@@ -27,9 +29,11 @@ public class Product {
   private Category category;
 
   @OneToMany(mappedBy = "product")
+  @JsonIgnore
   private List<ProductDiscount> productDiscounts;
 
   @OneToMany(mappedBy = "order")
+  @JsonIgnore
   private List<ProductOrder> orders;
 
   @Column(nullable = false)

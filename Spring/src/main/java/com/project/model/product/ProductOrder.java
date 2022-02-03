@@ -1,6 +1,7 @@
 package com.project.model.product;
 
 import com.project.model.customer.Order;
+import com.project.model.product.helper.ProductContainer;
 import com.project.model.product.keys.ProductOrderKey;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class ProductOrder {
+public class ProductOrder implements ProductContainer {
   @EmbeddedId
   private ProductOrderKey id;
 

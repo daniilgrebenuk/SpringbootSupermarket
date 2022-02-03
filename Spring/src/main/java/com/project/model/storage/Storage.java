@@ -1,5 +1,7 @@
 package com.project.model.storage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.model.product.Product;
 import com.project.model.product.ProductStorage;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -21,9 +23,14 @@ public class Storage {
 
   @OneToMany(mappedBy = "storage")
   @ToString.Exclude
+  @JsonIgnore
   private List<ProductStorage> products;
 
   private String location;
+
+  public void addProduct(ProductStorage productStorage){
+    products.add(productStorage);
+  }
 
   @Override
   public boolean equals(Object o) {

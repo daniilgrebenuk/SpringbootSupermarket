@@ -1,5 +1,6 @@
 package com.project.model.storage;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.product.ProductSupply;
 import lombok.*;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Supply {
 
   @Id
@@ -24,6 +25,7 @@ public class Supply {
   @ManyToOne
   private Storage storage;
 
+  @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
   private LocalDate date;
 
   @OneToMany(mappedBy = "supplyProduct")
@@ -38,21 +40,20 @@ public class Supply {
 
   private boolean accepted;
 
-  public void addProduct(ProductSupply productSupply){
-    products.add(productSupply);
+  public Supply(Storage storage, LocalDate date) {
+    this.storage = storage;
+    this.date = date;
+    this.accepted = false;
   }
 
-  public void addAllProduct(Iterable<ProductSupply> productSupplies){
-    productSupplies.forEach(products::add);
+  public void addProduct(ProductSupply productSupply){
+    products.add(productSupply);
   }
 
   public void addEmployee(SupplyEmployee supplyEmployee) {
     employees.add(supplyEmployee);
   }
 
-  public void addAllEmployee(Iterable<SupplyEmployee> supplyEmployees) {
-    supplyEmployees.forEach(employees::add);
-  }
 
   @Override
   public boolean equals(Object o) {

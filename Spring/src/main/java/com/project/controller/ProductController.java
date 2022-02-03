@@ -41,6 +41,16 @@ public class ProductController {
     }
   }
 
+  @GetMapping("/all-in-supply/{supplyId}")
+  public ResponseEntity<List<Product>> getAllProductInSupply(@PathVariable Long supplyId){
+    return ResponseEntity.ok(productService.findAllBySupplyId(supplyId));
+  }
+
+  @GetMapping("/all-in-storage/{storageId}")
+  public ResponseEntity<List<Product>> getAllProductInStorage(@PathVariable Long storageId){
+    return ResponseEntity.ok(productService.findAllByStorageId(storageId));
+  }
+
   @PostMapping("/add")
   //@PreAuthorize()
   public ResponseEntity<?> createNewProduct(@RequestBody @Valid Product product, Errors errors){

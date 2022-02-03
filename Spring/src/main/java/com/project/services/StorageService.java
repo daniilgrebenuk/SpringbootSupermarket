@@ -1,16 +1,16 @@
 package com.project.services;
 
-import com.project.model.storage.Supply;
+import com.project.model.product.Product;
+import com.project.model.product.helper.ProductContainer;
+import com.project.model.storage.Storage;
 
 import java.util.List;
 
 public interface StorageService {
 
-  Supply createNewSupply(Supply supply);
+  List<Storage> getAllStorage();
 
-  List<Supply> getAllSupplyByUsername(String username);
+  Storage addStorage(Storage storage);
 
-  List<Supply> getAllSupply();
-
-  void addEmployeeToSupply(Long supplyId, Long userId);
+  Storage addAllProductToStorage(Long storageId,  List<? extends ProductContainer> products);
 }
