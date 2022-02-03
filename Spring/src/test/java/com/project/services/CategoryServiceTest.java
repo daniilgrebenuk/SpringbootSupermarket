@@ -4,10 +4,10 @@ import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Category;
 import com.project.repository.product.CategoryRepository;
 import com.project.services.implementation.CategoryServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -21,13 +21,23 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("<= CategoryController Test =>")
+@DisplayName("<= CategoryService Test =>")
 class CategoryServiceTest {
-  @InjectMocks
-  private CategoryServiceImpl categoryServiceImpl;
+
+
+  private CategoryService categoryService;
 
   @Mock
   private CategoryRepository categoryRepository;
+
+
+  /**
+   * <h2>If you have changed the implementation, then change the init() code block</h2>
+   */
+  @BeforeEach
+  void init(){
+    categoryService = new CategoryServiceImpl(categoryRepository);
+  }
 
   @Test
   @DisplayName("<= find all categories =>")
@@ -41,7 +51,7 @@ class CategoryServiceTest {
 
     when(categoryRepository.findAll()).thenReturn(categoryList);
 
-    assertThat(categoryServiceImpl.findAll()).isEqualTo(categoryList);
+    assertThat(categoryService.findAll()).isEqualTo(categoryList);
   }
 
   @Test
@@ -49,7 +59,7 @@ class CategoryServiceTest {
   void addCategory(){
     Category category = new Category(1L,"category");
     when(categoryRepository.save(any(Category.class))).thenReturn(category);
-    assertThat(categoryServiceImpl.add(new Category(null,"category"))).isEqualTo(category);
+    assertThat(categoryService.add(new Category(null,"category"))).isEqualTo(category);
   }
 
   @Test
@@ -58,8 +68,8 @@ class CategoryServiceTest {
     Category category = new Category(1L, "Thing");
     when(categoryRepository.save(any(Category.class))).thenReturn(category);
     assertAll(
-        () -> assertDoesNotThrow(() -> categoryServiceImpl.update(category)),
-        () -> assertThat(categoryServiceImpl.update(category)).isEqualTo(category)
+        () -> assertDoesNotThrow(() -> categoryService.update(category)),
+        () -> assertThat(categoryService.update(category)).isEqualTo(category)
     );
   }
 
@@ -68,7 +78,7 @@ class CategoryServiceTest {
   void updateCategoryWithoutId() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> categoryServiceImpl.update(new Category())
+        () -> categoryService.update(new Category())
     );
   }
 
@@ -78,8 +88,8 @@ class CategoryServiceTest {
     when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(new Category(1L, "123")));
 
     assertAll(
-        () -> assertDoesNotThrow(() -> categoryServiceImpl.delete(1L)),
-        () -> assertThat(categoryServiceImpl.delete(1L)).isTrue()
+        () -> assertDoesNotThrow(() -> categoryService.delete(1L)),
+        () -> assertThat(categoryService.delete(1L)).isTrue()
     );
   }
 
@@ -88,6 +98,6 @@ class CategoryServiceTest {
   void deleteCategoryThatDoesntExist(){
     when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-    assertThatThrownBy(() -> categoryServiceImpl.delete(1L)).isInstanceOf(DataNotFoundException.class);
+    assertThatThrownBy(() -> categoryService.delete(1L)).isInstanceOf(DataNotFoundException.class);
   }
 }

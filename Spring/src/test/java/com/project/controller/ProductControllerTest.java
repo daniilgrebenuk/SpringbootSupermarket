@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @DisplayName("<= ProductController Test =>")
 class ProductControllerTest {
-  private static final String defaultUri = "/api/product";
+  private static final String DEFAULT_URI = "/api/product";
 
   @InjectMocks
   private ProductController controller;
@@ -63,7 +63,7 @@ class ProductControllerTest {
     when(service.findAll()).thenReturn(Arrays.asList(product1, product2, product3));
 
     mockMvc
-        .perform(get(defaultUri + "/all"))
+        .perform(get(DEFAULT_URI + "/all"))
         .andDo(print())
         .andExpectAll(
             status().isOk(),
@@ -85,7 +85,7 @@ class ProductControllerTest {
     when(service.findAllByCategoryId(any(Long.class))).thenReturn(Arrays.asList(product1, product2));
 
     mockMvc
-        .perform(get(defaultUri + "/all/category/1"))
+        .perform(get(DEFAULT_URI + "/all/category/1"))
         .andDo(print())
         .andExpectAll(
             status().isOk(),
@@ -101,7 +101,7 @@ class ProductControllerTest {
     when(service.findAllByCategoryId(any(Long.class))).thenThrow(new DataNotFoundException("Category is empty or does not exist"));
 
     mockMvc
-        .perform(get(defaultUri + "/all/category/1"))
+        .perform(get(DEFAULT_URI + "/all/category/1"))
         .andDo(print())
         .andExpectAll(
             status().isBadRequest(),
@@ -118,7 +118,7 @@ class ProductControllerTest {
 
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(productForRequest)
         )
@@ -134,7 +134,7 @@ class ProductControllerTest {
   void createNotValidProduct() throws Exception {
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(new Product()))
         )
@@ -155,7 +155,7 @@ class ProductControllerTest {
     when(service.update(any(Product.class))).thenReturn(correctProduct);
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctProduct))
         )
@@ -171,7 +171,7 @@ class ProductControllerTest {
   void updateNotValidProduct() throws Exception {
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(new Product()))
         )
@@ -191,7 +191,7 @@ class ProductControllerTest {
         .thenThrow(new IllegalArgumentException("Unable to save Product without Id"));
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctProduct))
         )

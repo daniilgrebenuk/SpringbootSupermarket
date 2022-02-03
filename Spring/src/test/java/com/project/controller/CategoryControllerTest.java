@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @DisplayName("<= CategoryController Test =>")
 class CategoryControllerTest {
-  private static final String defaultUri = "/api/category";
+  private static final String DEFAULT_URI = "/api/category";
 
   @InjectMocks
   private CategoryController controller;
@@ -59,7 +59,7 @@ class CategoryControllerTest {
     when(service.findAll()).thenReturn(categories);
 
     mockMvc
-        .perform(get(defaultUri + "/all"))
+        .perform(get(DEFAULT_URI + "/all"))
         .andDo(print())
         .andExpectAll(
             status().isOk(),
@@ -76,7 +76,7 @@ class CategoryControllerTest {
 
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(categoryForRequest)
         )
@@ -92,7 +92,7 @@ class CategoryControllerTest {
   void createNotValidCategory() throws Exception {
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(new Product()))
         )
@@ -111,7 +111,7 @@ class CategoryControllerTest {
     when(service.update(any(Category.class))).thenReturn(correctCategory);
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctCategory))
         )
@@ -127,7 +127,7 @@ class CategoryControllerTest {
   void updateNotValidCategory() throws Exception {
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(new Category()))
         )
@@ -145,7 +145,7 @@ class CategoryControllerTest {
         .thenThrow(new IllegalArgumentException("Unable to save Category without Id"));
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctCategory))
         )

@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("<= EmployeeController Test =>")
 @Slf4j
 class EmployeeControllerTest {
-  private final String defaultUri = "/api/employee";
+  private final static String DEFAULT_URI = "/api/employee";
 
   @InjectMocks
   private EmployeeController employeeController;
@@ -74,7 +74,7 @@ class EmployeeControllerTest {
     when(employeeServiceImpl.findAll()).thenReturn(employees);
 
     mockMvc
-        .perform(get(defaultUri + "/all"))
+        .perform(get(DEFAULT_URI + "/all"))
         .andDo(print())
         .andExpectAll(
             status().isOk(),
@@ -93,7 +93,7 @@ class EmployeeControllerTest {
 
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employeeForRequest)
         )
@@ -108,7 +108,7 @@ class EmployeeControllerTest {
   void addNotValidEmployee() throws Exception{
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(new Employee()))
         )
@@ -132,7 +132,7 @@ class EmployeeControllerTest {
 
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctEmployee))
         )
@@ -150,7 +150,7 @@ class EmployeeControllerTest {
 
     mockMvc
         .perform(
-            post(defaultUri + "/add")
+            post(DEFAULT_URI + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctEmployee))
         )
@@ -170,7 +170,7 @@ class EmployeeControllerTest {
     when(employeeServiceImpl.update(any(Employee.class))).thenReturn(correctEmployee);
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctEmployee))
         )
@@ -189,7 +189,7 @@ class EmployeeControllerTest {
 
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctEmployee))
         )
@@ -207,7 +207,7 @@ class EmployeeControllerTest {
 
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctEmployee))
         )
@@ -223,7 +223,7 @@ class EmployeeControllerTest {
   void updateNotValidEmployee() throws Exception{
     mockMvc
         .perform(
-            put(defaultUri + "/update")
+            put(DEFAULT_URI + "/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(new Employee()))
         )
@@ -251,7 +251,7 @@ class EmployeeControllerTest {
 
     mockMvc
         .perform(
-            get(defaultUri + "/all-roles")
+            get(DEFAULT_URI + "/all-roles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(correctEmployee))
         )
@@ -268,7 +268,7 @@ class EmployeeControllerTest {
     when(employeeServiceImpl.delete(any(Long.class))).thenReturn(true);
 
     mockMvc
-        .perform(delete(defaultUri + "/delete?id=1"))
+        .perform(delete(DEFAULT_URI + "/delete?id=1"))
         .andDo(print())
         .andExpect(
             status().isOk()
@@ -280,7 +280,7 @@ class EmployeeControllerTest {
   void deleteEmployeeWhichDoesNotExist() throws Exception {
     when(employeeServiceImpl.delete(any(Long.class))).thenThrow( new DataNotFoundException("User with id 1 doesn't exist!"));
     mockMvc
-        .perform(delete(defaultUri + "/delete?id=1"))
+        .perform(delete(DEFAULT_URI + "/delete?id=1"))
         .andDo(print())
         .andExpectAll(
             status().isBadRequest(),
