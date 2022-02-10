@@ -26,6 +26,7 @@ class EmployeeRepositoryTest {
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private Employee employee;
+  private int counter;
 
   @Autowired
   public EmployeeRepositoryTest(EmployeeRepository employeeRepository, UserRepository userRepository, RoleRepository roleRepository) {
@@ -36,25 +37,18 @@ class EmployeeRepositoryTest {
 
   @BeforeEach
   void setUp() {
-    Role role = new Role(1L, Authority.USER);
-    role = roleRepository.save(role);
-    User user = new User();
-    user.setUsername("1");
-    user.setPassword("1");
-    user.setIsNonExpired(true);
-    user.setRole(role);
-    user.setId(1L);
-    user = userRepository.save(user);
+    counter = 0;
+    Role role = roleRepository.save(new Role(null, Authority.USER));
+    User user = setUpUser(role);
 
-    employee = employeeRepository.saveAndFlush(new Employee(1L, "Bob1", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, user));
-    employeeRepository.saveAndFlush(new Employee(2L, "Bob2", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, user));
-    employeeRepository.saveAndFlush(new Employee(3L, "Bob3", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, user));
-
+    employee = setUpEmployee(user);
+    setUpEmployee(user);
+    setUpEmployee(user);
   }
 
 
   @Test
-  @DisplayName("<= delete nothing when employee exists =>")
+  @DisplayName("<= delete when employee exists =>")
   void deleteById() {
 
     employeeRepository.deleteById(employee.getId());
@@ -70,13 +64,38 @@ class EmployeeRepositoryTest {
   @Test
   @DisplayName("<= delete nothing when employee doesn't exist =>")
   void deleteNothingWithIncorrectId() {
-    employeeRepository.deleteById(7L);
-
+    employeeRepository.deleteById(1000L);
+    System.out.println(employeeRepository.findAll());
     assertAll(
         () -> assertThat(employeeRepository.findAll().size()).isEqualTo(3),
         () -> assertThat(
-            employeeRepository.findAll().stream().filter(e -> e.getId().equals(4L)).findAny().isEmpty()
+            employeeRepository.findAll().contains(employee)
         ).isTrue()
+    );
+  }
+
+  private User setUpUser(Role role){
+    User user = new User();
+    user.setUsername("1");
+    user.setPassword("1");
+    user.setIsNonExpired(true);
+    user.setRole(role);
+    return userRepository.save(user);
+  }
+
+  private Employee setUpEmployee(User user){
+    return employeeRepository.save(
+        new Employee(
+            null,
+            "Bob" + (counter++),
+            "Bob",
+            213L,
+            "123123",
+            "123213",
+            11313,
+            LocalDate.now(),
+            2, user
+        )
     );
   }
 }
