@@ -12,6 +12,7 @@ import com.project.model.storage.SupplyEmployee;
 import com.project.repository.employee.EmployeeRepository;
 import com.project.repository.product.ProductRepository;
 import com.project.repository.storage.StorageRepository;
+import com.project.repository.storage.SupplyEmployeeRepository;
 import com.project.repository.storage.SupplyRepository;
 import com.project.services.StorageService;
 import com.project.services.SupplyService;
@@ -24,17 +25,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CompletedStorageServiceImpl implements SupplyService, StorageService {
+
   private final StorageRepository storageRepository;
   private final SupplyRepository supplyRepository;
   private final EmployeeRepository employeeRepository;
   private final ProductRepository productRepository;
+  private final SupplyEmployeeRepository supplyEmployeeRepository;
 
 
-
-  public Supply addSupply(Long storageId, LocalDate date){
+  public Supply addSupply(Long storageId, LocalDate date) {
     Storage storage = storageRepository
         .findById(storageId)
-        .orElseThrow(()->new DataNotFoundException("Storage with current id doesn't exist: " + storageId));
+        .orElseThrow(() -> new DataNotFoundException("Storage with current id doesn't exist: " + storageId));
 
     Supply supply = new Supply(storage, date);
     return supplyRepository.save(supply);
@@ -48,32 +50,29 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
     return supplyRepository.findAll();
   }
 
-  public void addEmployeeToSupply(Long supplyId, Long userId) {
+  public void addEmployeeToSupply(Long supplyId, Long employeeId) {
     Supply supply = supplyRepository
         .findById(supplyId)
-        .orElseThrow(()->new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
+        .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
 
     Employee employee = employeeRepository
-        .findByUserId(userId)
-        .orElseThrow(()->new DataNotFoundException("Employee with current id doesn't exist: " + userId));
+        .findById(employeeId)
+        .orElseThrow(() -> new DataNotFoundException("Employee with current id doesn't exist: " + employeeId));
 
-    SupplyEmployee supplyEmployee = new SupplyEmployee();
-    supplyEmployee.setEmployee(employee);
-    supplyEmployee.setSupplyEmployee(supply);
+    SupplyEmployee supplyEmployee = new SupplyEmployee(supply, employee);
 
-    supply.addEmployee(supplyEmployee);
-    supplyRepository.save(supply);
+    supplyEmployeeRepository.save(supplyEmployee);
   }
 
   @Override
   public void addProductToSupply(Long supplyId, Long productId, Integer amount) {
     Supply supply = supplyRepository
         .findById(supplyId)
-        .orElseThrow(()->new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
+        .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
 
     Product product = productRepository
         .findById(productId)
-        .orElseThrow(()->new DataNotFoundException("Product with current id doesn't exist: " + productId));
+        .orElseThrow(() -> new DataNotFoundException("Product with current id doesn't exist: " + productId));
 
     ProductSupply productSupply = new ProductSupply();
     productSupply.setProduct(product);
@@ -88,7 +87,7 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   public void acceptSupplyById(Long supplyId) {
     Supply supply = supplyRepository
         .findById(supplyId)
-        .orElseThrow(()->new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
+        .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
     supply.setAccepted(true);
 
     addAllProductToStorage(supply.getStorage(), supply.getProducts());
@@ -108,12 +107,12 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   public Storage addAllProductToStorage(Long storageId, List<? extends ProductContainer> products) {
     Storage storage = storageRepository
         .findById(storageId)
-        .orElseThrow(()->new DataNotFoundException("Storage with current id doesn't exist: " + storageId));
+        .orElseThrow(() -> new DataNotFoundException("Storage with current id doesn't exist: " + storageId));
 
     return addAllProductToStorage(storage, products);
   }
 
-  private Storage addAllProductToStorage(Storage storage,  List<? extends ProductContainer> products){
+  private Storage addAllProductToStorage(Storage storage, List<? extends ProductContainer> products) {
     products
         .stream()
         .map(cont -> {

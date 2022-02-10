@@ -28,13 +28,13 @@ public class EmployeeController {
   private final EmployeeService employeeService;
 
   @GetMapping("/all")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  //@PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<List<Employee>> getAllEmployee() {
     return ResponseEntity.ok(employeeService.findAll());
   }
 
   @PostMapping("/add")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  //@PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<?> addEmployee(@RequestBody @Valid Employee employee, Errors errors) {
     if (errors.hasErrors()) {
       return getResponseEntityWithErrors(errors);
@@ -51,7 +51,7 @@ public class EmployeeController {
   }
 
   @PutMapping("/update")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  //@PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<?> updateEmployee(@RequestBody @Valid Employee employee, Errors errors) {
     if (errors.hasErrors()) {
       return getResponseEntityWithErrors(errors);
@@ -68,13 +68,13 @@ public class EmployeeController {
   }
 
   @GetMapping("/all-roles")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  //@PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<List<Role>> getAllRoles() {
     return ResponseEntity.ok(employeeService.roles());
   }
 
   @DeleteMapping("/delete")
-  @PreAuthorize("hasAuthority('ADMIN')")
+  //@PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<?> deleteEmployee(@RequestParam Long id) {
     try {
       employeeService.delete(id);

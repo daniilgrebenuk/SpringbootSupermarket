@@ -29,13 +29,9 @@ public class Supply {
   private LocalDate date;
 
   @OneToMany(mappedBy = "supplyProduct")
-  @ToString.Exclude
-  @JsonIgnore
   private List<ProductSupply> products;
 
   @OneToMany(mappedBy = "supplyEmployee")
-  @ToString.Exclude
-  @JsonIgnore
   private List<SupplyEmployee> employees;
 
   private boolean accepted;
@@ -48,10 +44,6 @@ public class Supply {
 
   public void addProduct(ProductSupply productSupply){
     products.add(productSupply);
-  }
-
-  public void addEmployee(SupplyEmployee supplyEmployee) {
-    employees.add(supplyEmployee);
   }
 
 

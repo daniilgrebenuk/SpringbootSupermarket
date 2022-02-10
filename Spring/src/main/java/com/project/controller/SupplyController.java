@@ -56,7 +56,7 @@ public class SupplyController {
   //@PreAuthorize()
   public ResponseEntity<?> addAllEmployee(@RequestBody List<Map<String, Long>> body) {
     try {
-      body.forEach(map -> supplyService.addEmployeeToSupply(map.get("supplyId"), map.get("userId")));
+      body.forEach(map -> supplyService.addEmployeeToSupply(map.get("supplyId"), map.get("employeeId")));
     } catch (Exception e) {
       log.warn(e.getMessage());
       return ResponseEntity.badRequest().body("Not correct body");
@@ -68,7 +68,7 @@ public class SupplyController {
   //@PreAuthorize()
   public ResponseEntity<?> addEmployee(@RequestBody Map<String, Long> body) {
     try {
-      supplyService.addEmployeeToSupply(body.get("supplyId"), body.get("userId"));
+      supplyService.addEmployeeToSupply(body.get("supplyId"), body.get("employeeId"));
     } catch (Exception e) {
       log.warn(e.getMessage());
       return ResponseEntity.badRequest().body("Not correct body");

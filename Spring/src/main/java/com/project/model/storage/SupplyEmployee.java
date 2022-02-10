@@ -1,5 +1,6 @@
 package com.project.model.storage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.employee.Employee;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -13,18 +14,28 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 public class SupplyEmployee {
+
   @EmbeddedId
-  private SupplyEmployeeKey id;
+  private SupplyEmployeeKey id = new SupplyEmployeeKey();
 
   @ManyToOne
   @MapsId("employeeId")
   @JoinColumn(name = "employee_id")
+  @ToString.Exclude
+  @JsonIgnore
   private Employee employee;
 
   @ManyToOne
   @MapsId("supplyId")
   @JoinColumn(name = "supply_id")
+  @ToString.Exclude
+  @JsonIgnore
   private Supply supplyEmployee;
+
+  public SupplyEmployee(Supply supplyEmployee, Employee employee) {
+    this.employee = employee;
+    this.supplyEmployee = supplyEmployee;
+  }
 
   @Override
   public boolean equals(Object o) {
