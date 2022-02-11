@@ -1,5 +1,6 @@
 package com.project.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.product.helper.ProductContainer;
 import com.project.model.storage.Storage;
 import com.project.model.product.keys.ProductStorageKey;
@@ -16,16 +17,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ProductStorage implements ProductContainer {
   @EmbeddedId
-  private ProductStorageKey id;
+  private ProductStorageKey id = new ProductStorageKey();
 
   @ManyToOne
   @MapsId("productId")
   @JoinColumn(name = "product_id")
+  @JsonIgnore
+  @ToString.Exclude
   private Product product;
 
   @ManyToOne
   @MapsId("storageId")
   @JoinColumn(name = "storage_id")
+  @JsonIgnore
+  @ToString.Exclude
   private Storage storage;
 
   private Integer amount;

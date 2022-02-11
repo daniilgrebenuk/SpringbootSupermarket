@@ -11,6 +11,7 @@ import com.project.model.storage.Supply;
 import com.project.model.storage.SupplyEmployee;
 import com.project.repository.employee.EmployeeRepository;
 import com.project.repository.product.ProductRepository;
+import com.project.repository.product.ProductStorageRepository;
 import com.project.repository.storage.StorageRepository;
 import com.project.repository.storage.SupplyEmployeeRepository;
 import com.project.repository.storage.SupplyRepository;
@@ -31,8 +32,10 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   private final EmployeeRepository employeeRepository;
   private final ProductRepository productRepository;
   private final SupplyEmployeeRepository supplyEmployeeRepository;
+  private final ProductStorageRepository productStorageRepository;
 
 
+  @Override
   public Supply addSupply(Long storageId, LocalDate date) {
     Storage storage = storageRepository
         .findById(storageId)
@@ -42,14 +45,17 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
     return supplyRepository.save(supply);
   }
 
+  @Override
   public List<Supply> getAllSupplyByUsername(String username) {
     return supplyRepository.getAllByUsername(username);
   }
 
+  @Override
   public List<Supply> getAllSupply() {
     return supplyRepository.findAll();
   }
 
+  @Override
   public void addEmployeeToSupply(Long supplyId, Long employeeId) {
     Supply supply = supplyRepository
         .findById(supplyId)
@@ -94,6 +100,13 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   }
 
   @Override
+  public Storage getStorageById(Long id) {
+    return storageRepository
+        .findById(id)
+        .orElseThrow(() -> new DataNotFoundException("Storage with current id doesn't exist: " + id));
+  }
+
+  @Override
   public List<Storage> getAllStorage() {
     return storageRepository.findAll();
   }
@@ -104,10 +117,19 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   }
 
   @Override
+  public Storage addProductToStorage(Long storageId, ProductContainer product) {
+    Storage storage = getStorageById(storageId);
+
+    ProductStorage productStorage = productContainerToProductStorage(storage,product);
+
+    storage.addProduct(productStorageRepository.save(productStorage));
+
+    return storage;
+  }
+
+  @Override
   public Storage addAllProductToStorage(Long storageId, List<? extends ProductContainer> products) {
-    Storage storage = storageRepository
-        .findById(storageId)
-        .orElseThrow(() -> new DataNotFoundException("Storage with current id doesn't exist: " + storageId));
+    Storage storage = getStorageById(storageId);
 
     return addAllProductToStorage(storage, products);
   }
@@ -115,14 +137,16 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   private Storage addAllProductToStorage(Storage storage, List<? extends ProductContainer> products) {
     products
         .stream()
-        .map(cont -> {
-          ProductStorage productStorage = new ProductStorage();
-          productStorage.setProduct(cont.getProduct());
-          productStorage.setStorage(storage);
-          productStorage.setAmount(cont.getAmount());
-          return productStorage;
-        })
-        .forEach(storage::addProduct);
+        .map(cont->productContainerToProductStorage(storage,cont))
+        .forEach(ps -> storage.addProduct(productStorageRepository.save(ps)));
     return storage;
+  }
+
+  private ProductStorage productContainerToProductStorage(Storage storage, ProductContainer productContainer){
+    ProductStorage productStorage = new ProductStorage();
+    productStorage.setProduct(productContainer.getProduct());
+    productStorage.setStorage(storage);
+    productStorage.setAmount(productContainer.getAmount());
+    return productStorage;
   }
 }

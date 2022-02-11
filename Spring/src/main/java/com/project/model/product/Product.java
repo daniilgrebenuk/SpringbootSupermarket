@@ -9,9 +9,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
+
+@Entity
 @Getter
 @Setter
-@Entity
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -29,11 +31,9 @@ public class Product {
   private Category category;
 
   @OneToMany(mappedBy = "product")
-  @JsonIgnore
   private List<ProductDiscount> productDiscounts;
 
   @OneToMany(mappedBy = "order")
-  @JsonIgnore
   private List<ProductOrder> orders;
 
   @Column(nullable = false)
@@ -52,13 +52,5 @@ public class Product {
   @Override
   public int hashCode() {
     return Objects.hash(id);
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName() + "(" +
-        "id = " + id + ", " +
-        "name = " + name + ", " +
-        "category = " + category + ")";
   }
 }
