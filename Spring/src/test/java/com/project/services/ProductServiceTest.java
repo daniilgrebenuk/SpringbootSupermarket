@@ -17,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -28,6 +30,8 @@ import static org.mockito.Mockito.when;
 @DisplayName("<= ProductService Test =>")
 class ProductServiceTest {
 
+  private long counter;
+
   private ProductService productService;
 
   @Mock
@@ -37,8 +41,9 @@ class ProductServiceTest {
    * <h2>If you have changed the implementation, then change the init() code block</h2>
    */
   @BeforeEach
-  void init(@Mock DiscountRepository discountRepository, @Mock CategoryRepository categoryRepository){
+  void init(@Mock DiscountRepository discountRepository, @Mock CategoryRepository categoryRepository) {
     productService = new ProductServiceImpl(productRepository, discountRepository, categoryRepository);
+    counter = 1;
   }
 
   @Test
@@ -75,7 +80,7 @@ class ProductServiceTest {
 
   @Test
   @DisplayName("<= add Product =>")
-  void addProduct(){
+  void addProduct() {
     Product product = new Product(1L, null, null, null, null, null);
     when(productRepository.save(any(Product.class))).thenReturn(product);
     assertThat(productService.add(product)).isEqualTo(product);
@@ -134,7 +139,7 @@ class ProductServiceTest {
   @Test
   @DisplayName("<= delete Product with correct Id")
   void deleteProductWithCorrectId() {
-    Product product = new Product(1L, null, null, null, null, null);
+    Product product = initProduct();
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(product));
 
     assertAll(
@@ -149,5 +154,43 @@ class ProductServiceTest {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> productService.delete(1L)).isInstanceOf(DataNotFoundException.class);
+  }
+
+  @Test
+  @DisplayName("<= find all product by supplyId =>")
+  void findAllBySupplyId(){
+    Long supplyId = 1L;
+    List<Product> products = IntStream
+        .range(0,15)
+        .mapToObj(n->initProduct())
+        .collect(Collectors.toList());
+
+    when(productRepository.findAllBySupplyId(any(Long.class))).thenReturn(products);
+
+    assertThat(productService.findAllBySupplyId(supplyId)).isEqualTo(products);
+  }
+
+  @Test
+  @DisplayName("<= find all product by storageId =>")
+  void findAllByStorageId(){
+    Long storageId = 1L;
+    List<Product> products = IntStream
+        .range(0,15)
+        .mapToObj(n->initProduct())
+        .collect(Collectors.toList());
+
+    when(productRepository.findAllByStorageId(any(Long.class))).thenReturn(products);
+
+    assertThat(productService.findAllByStorageId(storageId)).isEqualTo(products);
+  }
+
+  private Product initProduct() {
+    return new Product(
+        counter++,
+        "" + counter,
+        null,
+        null,
+        null,
+        (double) counter);
   }
 }

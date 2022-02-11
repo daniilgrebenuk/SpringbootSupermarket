@@ -9,6 +9,7 @@ import com.project.model.storage.Storage;
 import com.project.repository.employee.EmployeeRepository;
 import com.project.repository.product.ProductRepository;
 import com.project.repository.product.ProductStorageRepository;
+import com.project.repository.product.ProductSupplyRepository;
 import com.project.repository.storage.StorageRepository;
 import com.project.repository.storage.SupplyEmployeeRepository;
 import com.project.repository.storage.SupplyRepository;
@@ -45,6 +46,9 @@ public class StorageServiceTest {
   @Mock
   private ProductStorageRepository productStorageRepository;
 
+  @Mock
+  private SupplyEmployeeRepository supplyEmployeeRepository;
+
   /**
    * <h2>If you have changed the implementation, then change the init() code block</h2>
    */
@@ -53,15 +57,17 @@ public class StorageServiceTest {
       @Mock SupplyRepository supplyRepository,
       @Mock EmployeeRepository employeeRepository,
       @Mock ProductRepository productRepository,
-      @Mock SupplyEmployeeRepository supplyEmployeeRepository
-  ) {
+      @Mock SupplyEmployeeRepository supplyEmployeeRepository,
+      @Mock ProductSupplyRepository productSupplyRepository
+      ) {
     storageService = new CompletedStorageServiceImpl(
         storageRepository,
         supplyRepository,
         employeeRepository,
         productRepository,
         supplyEmployeeRepository,
-        productStorageRepository
+        productStorageRepository,
+        productSupplyRepository
     );
 
     counter = 0;

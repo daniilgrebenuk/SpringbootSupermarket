@@ -1,5 +1,6 @@
 package com.project.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.product.helper.ProductContainer;
 import com.project.model.storage.Supply;
 import com.project.model.product.keys.ProductSupplyKey;
@@ -22,11 +23,15 @@ public class ProductSupply implements ProductContainer {
   @ManyToOne
   @MapsId("productId")
   @JoinColumn(name = "product_id")
+  @ToString.Exclude
+  @JsonIgnore
   private Product product;
 
   @ManyToOne
   @MapsId("supplyId")
   @JoinColumn(name = "supply_id")
+  @ToString.Exclude
+  @JsonIgnore
   private Supply supplyProduct;
 
   private Integer amount;

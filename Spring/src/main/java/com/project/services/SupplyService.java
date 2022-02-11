@@ -13,9 +13,9 @@ public interface SupplyService {
 
   List<Supply> getAllSupply();
 
-  void addEmployeeToSupply(Long supplyId, Long userId);
+  Supply addEmployeeToSupply(Long supplyId, Long userId);
 
-  void addProductToSupply(Long supplyId, Long productId, Integer amount);
+  Supply addProductToSupply(Long supplyId, Long productId, Integer amount);
 
-  void acceptSupplyById(Long supplyId);
+  boolean acceptSupplyById(Long supplyId);
 }

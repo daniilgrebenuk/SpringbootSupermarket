@@ -12,6 +12,7 @@ import com.project.model.storage.SupplyEmployee;
 import com.project.repository.employee.EmployeeRepository;
 import com.project.repository.product.ProductRepository;
 import com.project.repository.product.ProductStorageRepository;
+import com.project.repository.product.ProductSupplyRepository;
 import com.project.repository.storage.StorageRepository;
 import com.project.repository.storage.SupplyEmployeeRepository;
 import com.project.repository.storage.SupplyRepository;
@@ -33,6 +34,7 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   private final ProductRepository productRepository;
   private final SupplyEmployeeRepository supplyEmployeeRepository;
   private final ProductStorageRepository productStorageRepository;
+  private final ProductSupplyRepository productSupplyRepository;
 
 
   @Override
@@ -56,7 +58,7 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   }
 
   @Override
-  public void addEmployeeToSupply(Long supplyId, Long employeeId) {
+  public Supply addEmployeeToSupply(Long supplyId, Long employeeId) {
     Supply supply = supplyRepository
         .findById(supplyId)
         .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
@@ -67,11 +69,14 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
 
     SupplyEmployee supplyEmployee = new SupplyEmployee(supply, employee);
 
-    supplyEmployeeRepository.save(supplyEmployee);
+    supplyEmployee = supplyEmployeeRepository.save(supplyEmployee);
+
+    supply.getEmployees().add(supplyEmployee);
+    return supply;
   }
 
   @Override
-  public void addProductToSupply(Long supplyId, Long productId, Integer amount) {
+  public Supply addProductToSupply(Long supplyId, Long productId, Integer amount) {
     Supply supply = supplyRepository
         .findById(supplyId)
         .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
@@ -84,19 +89,24 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
     productSupply.setProduct(product);
     productSupply.setSupplyProduct(supply);
     productSupply.setAmount(amount);
+
+    productSupply = productSupplyRepository.save(productSupply);
     supply.addProduct(productSupply);
 
-    supplyRepository.save(supply);
+    return supply;
   }
 
   @Override
-  public void acceptSupplyById(Long supplyId) {
+  public boolean acceptSupplyById(Long supplyId) {
     Supply supply = supplyRepository
         .findById(supplyId)
         .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
+    if (supply.isAccepted())
+      return false;
     supply.setAccepted(true);
-
+    supplyRepository.save(supply);
     addAllProductToStorage(supply.getStorage(), supply.getProducts());
+    return true;
   }
 
   @Override
