@@ -18,13 +18,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
 
 
+  @Override
   public User findByUsernameOrMobileNumber(String usernameOrMobileNumber) {
     return userRepository
         .findByUsername(usernameOrMobileNumber)
@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
         );
   }
 
+  @Override
   public User regNewUserFromRegistrationForm(RegistrationForm form) {
     User user = new User();
     user.setIsNonExpired(true);
@@ -49,17 +50,20 @@ public class UserServiceImpl implements UserService {
                 () -> new DataNotFoundException("Role with authority:{" + Authority.USER.name() + "} doesn't exist!")
             )
     );
-    return userRepository.save(user);
+    return save(user);
   }
 
+  @Override
   public List<Role> findAllRoles() {
     return roleRepository.findAll();
   }
 
+  @Override
   public User findUserById(Long id) {
     return userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User with id: " + id + " doesn't exist!"));
   }
 
+  @Override
   public User save(User user) {
     return this.userRepository.save(user);
   }
