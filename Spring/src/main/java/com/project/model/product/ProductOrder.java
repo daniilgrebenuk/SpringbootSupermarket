@@ -1,5 +1,6 @@
 package com.project.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.customer.Order;
 import com.project.model.product.helper.ProductContainer;
 import com.project.model.product.keys.ProductOrderKey;
@@ -16,16 +17,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ProductOrder implements ProductContainer {
   @EmbeddedId
-  private ProductOrderKey id;
+  private ProductOrderKey id = new ProductOrderKey();
 
   @ManyToOne
   @MapsId("productId")
   @JoinColumn(name = "product_id")
+  @ToString.Exclude
+  @JsonIgnore
   private Product product;
 
   @ManyToOne
   @MapsId("orderId")
   @JoinColumn(name = "order_id")
+  @ToString.Exclude
+  @JsonIgnore
   private Order order;
 
   private Integer amount;

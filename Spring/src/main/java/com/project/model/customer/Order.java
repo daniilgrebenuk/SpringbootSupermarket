@@ -1,5 +1,6 @@
 package com.project.model.customer;
 
+import com.project.model.product.Discount;
 import com.project.model.product.ProductOrder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,9 @@ public class Order {
 
   @OneToMany(mappedBy = "order")
   private List<ProductOrder> products;
+
+  @ManyToMany
+  private List<Discount> discounts;
 
   @Override
   public boolean equals(Object o) {

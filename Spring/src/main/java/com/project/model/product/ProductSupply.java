@@ -18,7 +18,7 @@ import java.util.Objects;
 public class ProductSupply implements ProductContainer {
 
   @EmbeddedId
-  private ProductSupplyKey id;
+  private ProductSupplyKey id = new ProductSupplyKey();
 
   @ManyToOne
   @MapsId("productId")

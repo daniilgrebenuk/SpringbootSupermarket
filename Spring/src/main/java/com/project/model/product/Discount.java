@@ -3,18 +3,20 @@ package com.project.model.product;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 public class Discount {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -28,8 +30,7 @@ public class Discount {
   @Column(nullable = false)
   private LocalDate expireDate;
 
-  @OneToMany(mappedBy = "discount")
-  private List<ProductDiscount> productDiscounts;
+  private Boolean isGlobal;
 
   @Override
   public boolean equals(Object o) {
@@ -42,14 +43,5 @@ public class Discount {
   @Override
   public int hashCode() {
     return Objects.hash(id);
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName() + "(" +
-        "id = " + id + ", " +
-        "discount = " + discount + ", " +
-        "category = " + category + ", " +
-        "expireDate = " + expireDate + ")";
   }
 }

@@ -1,10 +1,12 @@
 package com.project.model.customer;
 
 import com.project.model.credential.User;
+import com.project.model.product.Discount;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,9 @@ public class Customer {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(nullable = false)
   private User user;
+
+  @ManyToMany
+  private List<Discount> discounts;
 
   @Override
   public boolean equals(Object o) {

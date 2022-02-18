@@ -28,16 +28,6 @@ public class ProjectApplication {
     return args -> loadAllAuthority(repository);
   }
 
-  private void loadAllAuthority(RoleRepository repository){
-    Arrays
-        .stream(Authority.values())
-        .forEach(a->{
-          if (!repository.existsByAuthority(a)){
-            repository.save(new Role(null, a));
-          }
-        });
-  }
-
   @Bean
   public PasswordEncoder passwordEncoder(){
     return new BCryptPasswordEncoder(12);
@@ -57,5 +47,15 @@ public class ProjectApplication {
     UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
     urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
     return new CorsFilter(urlBasedCorsConfigurationSource);
+  }
+
+  private void loadAllAuthority(RoleRepository repository){
+    Arrays
+        .stream(Authority.values())
+        .forEach(a->{
+          if (!repository.existsByAuthority(a)){
+            repository.save(new Role(null, a));
+          }
+        });
   }
 }

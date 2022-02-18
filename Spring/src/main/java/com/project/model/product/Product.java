@@ -1,6 +1,5 @@
 package com.project.model.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -30,8 +29,8 @@ public class Product {
   @NotNull(message = "The product must have a category!")
   private Category category;
 
-  @OneToMany(mappedBy = "product")
-  private List<ProductDiscount> productDiscounts;
+  @ManyToOne
+  private Discount discount;
 
   @OneToMany(mappedBy = "order")
   private List<ProductOrder> orders;

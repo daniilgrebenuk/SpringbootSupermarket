@@ -41,8 +41,8 @@ class ProductServiceTest {
    * <h2>If you have changed the implementation, then change the init() code block</h2>
    */
   @BeforeEach
-  void init(@Mock DiscountRepository discountRepository, @Mock CategoryRepository categoryRepository) {
-    productService = new ProductServiceImpl(productRepository, discountRepository, categoryRepository);
+  void init() {
+    productService = new ProductServiceImpl(productRepository);
     counter = 1;
   }
 
@@ -70,9 +70,9 @@ class ProductServiceTest {
   @DisplayName("<= find all Products =>")
   void findAll() {
     Category category = new Category(1L, "Vegetables");
-    Product product1 = new Product(1L, "Tomato1", category, List.of(), List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, List.of(), List.of(), 200D);
-    Product product3 = new Product(3L, "Tomato3", category, List.of(), List.of(), 200D);
+    Product product1 = new Product(1L, "Tomato1", category, null, List.of(), 200D);
+    Product product2 = new Product(2L, "Tomato2", category, null, List.of(), 200D);
+    Product product3 = new Product(3L, "Tomato3", category, null, List.of(), 200D);
     List<Product> products = Arrays.asList(product1, product2, product3);
     when(productRepository.findAll()).thenReturn(products);
     assertThat(productService.findAll()).isEqualTo(products);
@@ -111,9 +111,9 @@ class ProductServiceTest {
   @DisplayName("<= find all product by Category.id =>")
   void allProductByCategoryId() {
     Category category = new Category(1L, "Vegetables");
-    Product product1 = new Product(1L, "Tomato1", category, List.of(), List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, List.of(), List.of(), 200D);
-    Product product3 = new Product(3L, "Tomato3", category, List.of(), List.of(), 200D);
+    Product product1 = new Product(1L, "Tomato1", category,null, List.of(), 200D);
+    Product product2 = new Product(2L, "Tomato2", category, null, List.of(), 200D);
+    Product product3 = new Product(3L, "Tomato3", category, null, List.of(), 200D);
     when(productRepository.findAllByCategoryId(any(Long.class))).thenReturn(Arrays.asList(product1, product2, product3));
 
     List<Product> products = productService.findAllByCategoryId(1L);
