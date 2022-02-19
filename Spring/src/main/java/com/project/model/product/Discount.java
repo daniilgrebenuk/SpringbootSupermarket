@@ -27,6 +27,9 @@ public class Discount {
   @ManyToOne
   private Category category;
 
+  @ManyToOne
+  private Product product;
+
   @Column(nullable = false)
   private LocalDate expireDate;
 

@@ -27,7 +27,12 @@ public class Customer {
   private User user;
 
   @ManyToMany
+  @ToString.Exclude
   private List<Discount> discounts;
+
+  public boolean addDiscount(Discount discount){
+    return discounts.add(discount);
+  }
 
   @Override
   public boolean equals(Object o) {

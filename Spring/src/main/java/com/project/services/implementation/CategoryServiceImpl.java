@@ -16,6 +16,13 @@ public class CategoryServiceImpl implements CategoryService {
   private final CategoryRepository categoryRepository;
 
 
+  @Override
+  public Category findById(Long categoryId) {
+    return categoryRepository
+        .findById(categoryId)
+        .orElseThrow(()->new DataNotFoundException("Category with id " + categoryId + " doesn't exist!"));
+  }
+
   public List<Category> findAll() {
     return categoryRepository.findAll();
   }
@@ -32,9 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   public boolean delete(Long id) {
-    Category category = categoryRepository.findById(id).orElseThrow(
-        () -> new DataNotFoundException("Category with id " + id + " doesn't exist!")
-    );
+    Category category = findById(id);
     categoryRepository.delete(category);
     return true;
   }

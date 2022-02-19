@@ -49,16 +49,16 @@ class ProductControllerTest {
 
 
     Category category = new Category(1L, "Vegetables");
-    correctProduct = new Product(null, "Tomato", category, null, List.of(), 200D);
+    correctProduct = new Product(null, "Tomato", category, List.of(), 200D);
   }
 
   @Test
   @DisplayName("<= HttpStatus.OK and correct data when use allProduct =>")
   void allProduct() throws Exception {
     Category category = new Category(1L, "Vegetables");
-    Product product1 = new Product(1L, "Tomato1", category, null, List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, null, List.of(), 200D);
-    Product product3 = new Product(3L, "Tomato3", category, null, List.of(), 200D);
+    Product product1 = new Product(1L, "Tomato1", category, List.of(), 200D);
+    Product product2 = new Product(2L, "Tomato2", category, List.of(), 200D);
+    Product product3 = new Product(3L, "Tomato3", category, List.of(), 200D);
 
     when(service.findAll()).thenReturn(Arrays.asList(product1, product2, product3));
 
@@ -78,9 +78,9 @@ class ProductControllerTest {
   void allProductByCategoryId() throws Exception {
     Category category = new Category(1L, "Vegetables");
     Category categoryForAnotherProduct = new Category(2L, "Thing");
-    Product product1 = new Product(1L, "Tomato1", category, null, List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, null, List.of(), 200D);
-    Product productWithAnotherCategory = new Product(3L, "Tomato3", categoryForAnotherProduct, null, List.of(), 200D);
+    Product product1 = new Product(1L, "Tomato1", category, List.of(), 200D);
+    Product product2 = new Product(2L, "Tomato2", category,  List.of(), 200D);
+    Product productWithAnotherCategory = new Product(3L, "Tomato3", categoryForAnotherProduct,  List.of(), 200D);
 
     when(service.findAllByCategoryId(any(Long.class))).thenReturn(Arrays.asList(product1, product2));
 

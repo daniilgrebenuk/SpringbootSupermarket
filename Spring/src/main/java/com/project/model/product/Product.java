@@ -29,8 +29,6 @@ public class Product {
   @NotNull(message = "The product must have a category!")
   private Category category;
 
-  @ManyToOne
-  private Discount discount;
 
   @OneToMany(mappedBy = "order")
   private List<ProductOrder> orders;
