@@ -1,0 +1,49 @@
+.container {
+  text-align: center;
+}
+
+.storage-wrap{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.storage-wrap .storage{
+  width: 24%;
+  display: inline-block;
+  margin-top: 1em;
+  margin-right: calc(4%/3);
+  padding: 1em 1.5em;
+  border-radius: 1em;
+  border: solid black 1px;
+}
+
+.storage-wrap .add-button{
+  background-color: #00EB89;
+}
+
+.storage-wrap .storage:hover{
+  background-color: #DCDCDC;
+}
+
+.storage-wrap .add-button:hover{
+  background-color: #00D77E;
+  cursor: pointer;
+}
+
+.storage-wrap .storage:nth-child(4){
+  margin-right: 0;
+}
+
+.search {
+  font-size: 1.5rem;
+  margin-left: 1em;
+  width: 80%;
+  outline: none;
+  border-radius: 0.25em;
+}
+
+.close {
+  top: .44em;
+  right: .75em;
+}

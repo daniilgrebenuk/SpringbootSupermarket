@@ -10,6 +10,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./service/authorization/auth.interceptor";
 import { ErrorPageComponent } from './employee-components/error-page/error-page.component';
 import { ProductManagerComponent } from './employee-components/product-manager/product-manager.component';
+import { StorageManagerComponent } from './employee-components/storage-manager/storage-manager.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ProductManagerComponent } from './employee-components/product-manager/p
     EmployeeManagerComponent,
     AuthorizationComponent,
     ErrorPageComponent,
-    ProductManagerComponent
+    ProductManagerComponent,
+    StorageManagerComponent
   ],
   imports: [
     BrowserModule,

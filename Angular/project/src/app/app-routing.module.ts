@@ -4,12 +4,14 @@ import {EmployeeManagerComponent} from "./employee-components/employee-manager/e
 import {AuthorizationComponent} from "./customer-components/authorization/authorization.component";
 import {ErrorPageComponent} from "./employee-components/error-page/error-page.component";
 import {ProductManagerComponent} from "./employee-components/product-manager/product-manager.component";
+import {StorageManagerComponent} from "./employee-components/storage-manager/storage-manager.component";
 
 const routes: Routes = [
   {path: 'employee', component: EmployeeManagerComponent},
   {path: 'authorization', component: AuthorizationComponent},
   {path: 'error', component: ErrorPageComponent},
-  {path: 'product', component: ProductManagerComponent}
+  {path: 'product', component: ProductManagerComponent},
+  {path: 'storage', component: StorageManagerComponent}
 ];
 
 @NgModule({
