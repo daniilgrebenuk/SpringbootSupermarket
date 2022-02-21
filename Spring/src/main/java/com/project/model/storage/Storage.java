@@ -22,6 +22,8 @@ public class Storage {
   private Long id;
 
   @OneToMany(mappedBy = "storage")
+  @ToString.Exclude
+  @JsonIgnore
   private List<ProductStorage> products;
 
   private String location;
