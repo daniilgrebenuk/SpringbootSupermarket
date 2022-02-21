@@ -2,6 +2,7 @@ package com.project.model.customer;
 
 import com.project.model.product.Discount;
 import com.project.model.product.ProductOrder;
+import com.project.model.storage.Storage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,9 @@ public class Order {
 
   @ManyToOne
   private Customer customer;
+
+  @ManyToOne
+  private Storage storage;
 
   @OneToMany(mappedBy = "order")
   private List<ProductOrder> products;

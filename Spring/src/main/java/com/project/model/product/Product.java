@@ -1,5 +1,6 @@
 package com.project.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -31,6 +32,8 @@ public class Product {
 
 
   @OneToMany(mappedBy = "order")
+  @ToString.Exclude
+  @JsonIgnore
   private List<ProductOrder> orders;
 
   @Column(nullable = false)
