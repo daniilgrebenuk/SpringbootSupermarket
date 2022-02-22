@@ -1,21 +1,29 @@
 <body class="container">
-<div class="categories">
-  <div class="category" [ngClass]="{'selected' : currentCategory === null}" (click)="getAllProductClick()">All product</div>
+<div id="categories" class="categories">
+  <div id="all-product" class="category" [ngClass]="{'selected' : currentCategory === null}" (click)="getAllProductClick()">All product</div>
   <div class="category" [ngClass]="{'selected':currentCategory?.id===category.id}" *ngFor="let category of categories" (click)="getProductsByCategoryId(category)">
     {{category.name}}
   </div>
-  <div class="category add-button" (click)="onAddCategoryClick()">Add</div>
+  <div id="all-product-add-button" class="category add-button" (click)="onAddCategoryClick()">Add</div>
 </div>
-<div class="search-wrapper">
+<div id="search" class="search-wrapper">
   <input type="text" class="search" [(ngModel)]="searchOption">
   <span class="close" (click)="clearSearch()"></span>
 </div>
-<div class="products">
+
+<div id="spinner" class="lds-spinner">
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+</div>
+
+<div id="products" class="products">
   <div class="product" *ngFor="let product of getProductsWithSearch()" (click)="onProductCLick(product)">
     <div class="product-field">{{product.name}}</div>
     <div class="product-field">{{product.price}}</div>
   </div>
-  <div class="product" (click)="onAddProductClick()">Add</div>
+  <div id="add-button" class="product add-button" (click)="onAddProductClick()">Add</div>
 </div>
 </body>
 

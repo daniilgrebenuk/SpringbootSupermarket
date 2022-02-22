@@ -18,4 +18,6 @@ public interface SupplyService {
   Supply addProductToSupply(Long supplyId, Long productId, Integer amount);
 
   boolean acceptSupplyById(Long supplyId);
+
+  List<Supply> findByStorageId(Long id);
 }

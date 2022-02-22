@@ -34,6 +34,15 @@ public class SupplyController {
     return ResponseEntity.ok(supplyService.getAllSupply());
   }
 
+  @GetMapping("/all-by-storage-id/{id}")
+  public ResponseEntity<?> getAllSupplyByStorageId(@PathVariable Long id){
+    try {
+      return ResponseEntity.ok(supplyService.findByStorageId(id));
+    }catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
   @PostMapping("/add")
   //@PreAuthorize()
   public ResponseEntity<?> addSupply(@RequestBody Map<String, String> body) {

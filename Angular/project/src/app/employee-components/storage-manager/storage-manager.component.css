@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  opacity: 0;
 }
 
 .storage-wrap .storage{
@@ -24,6 +25,7 @@
 
 .storage-wrap .storage:hover{
   background-color: #DCDCDC;
+  cursor: pointer;
 }
 
 .storage-wrap .add-button:hover{
@@ -31,7 +33,7 @@
   cursor: pointer;
 }
 
-.storage-wrap .storage:nth-child(4){
+.storage-wrap .storage:nth-child(4n){
   margin-right: 0;
 }
 

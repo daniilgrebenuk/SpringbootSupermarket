@@ -11,6 +11,7 @@ import {AuthInterceptor} from "./service/authorization/auth.interceptor";
 import { ErrorPageComponent } from './employee-components/error-page/error-page.component';
 import { ProductManagerComponent } from './employee-components/product-manager/product-manager.component';
 import { StorageManagerComponent } from './employee-components/storage-manager/storage-manager.component';
+import { SupplyManagerComponent } from './employee-components/supply-manager/supply-manager.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StorageManagerComponent } from './employee-components/storage-manager/s
     AuthorizationComponent,
     ErrorPageComponent,
     ProductManagerComponent,
-    StorageManagerComponent
+    StorageManagerComponent,
+    SupplyManagerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {StorageService} from "../../service/company/storage.service";
 import {Storage} from "../../model/storage";
+import {ActivatedRoute, Router} from "@angular/router";
+import {AppComponent} from "../../app.component";
+import {Renderer} from "@angular/compiler-cli/ngcc/src/rendering/renderer";
 
 @Component({
   selector: 'app-storage-manager',
@@ -12,7 +15,12 @@ export class StorageManagerComponent implements OnInit {
   public storages: Storage[] = [];
   public search:string = "";
 
-  constructor(private storageService: StorageService) { }
+  constructor(
+    private storageService: StorageService,
+    private router: Router,
+    private elem: ElementRef,
+    private renderer: Renderer2
+  ) { }
 
   ngOnInit(): void {
     this.initStorage();
@@ -22,6 +30,7 @@ export class StorageManagerComponent implements OnInit {
     this.storageService.getAllStorage().subscribe(
       resp=>{
         this.storages = resp;
+        this.hideSpinnerAndShowAddButton();
       }
     )
   }
@@ -44,5 +53,17 @@ export class StorageManagerComponent implements OnInit {
 
   filterStorage(): Storage[]{
     return this.storages.filter(s=>s.location.includes(this.search));
+  }
+
+  redirectToSupply(id: number) {
+    this.router.navigate([`storage/${id}`]);
+  }
+
+  private hideSpinnerAndShowAddButton(){
+    let spinner = document.getElementById("spinner")
+    let storage = document.getElementById("storage-wrap")
+
+    spinner?.remove();
+    storage!.style.opacity = "1";
   }
 }

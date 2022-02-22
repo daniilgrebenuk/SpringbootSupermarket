@@ -3,6 +3,7 @@ import {ProductService} from "../../service/company/product.service";
 import {Category, Product} from "../../model/product";
 import {NgForm} from "@angular/forms";
 import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-product-manager',
@@ -16,6 +17,9 @@ export class ProductManagerComponent implements OnInit {
   public searchOption: string = "";
   public currentCategory: Category | null = null;
   public currentProduct: Product | null = null;
+
+  private categoryIsLoad = false;
+  private productIsLoad = false;
 
   constructor(private productService: ProductService) {
     this.initAllCategoryAndProduct()
@@ -44,20 +48,26 @@ export class ProductManagerComponent implements OnInit {
 
   getAllProduct() {
     this.productService.getAllProduct().subscribe(
-      resp => this.products = resp
+      resp => {
+        this.products = resp;
+        this.productIsLoad = true;
+        this.hideSpinnerAndShowAddButtons();
+      }
     );
   }
 
   initAllCategoryAndProduct() {
-    this.initAllProduct()
     this.getAllCategory()
+    this.initAllProduct()
   }
 
   initAllProduct() {
     this.currentProduct = null;
     if (this.currentCategory) {
       this.productService.getAllProductByCategoryId(this.currentCategory.id).subscribe(
-        resp => this.products = resp,
+        resp => {
+          this.products = resp;
+        },
         error => {
           this.products = []
         }
@@ -69,7 +79,11 @@ export class ProductManagerComponent implements OnInit {
 
   private getAllCategory() {
     this.productService.getAllCategory().subscribe(
-      resp => this.categories = resp
+      resp => {
+        this.categories = resp;
+        this.categoryIsLoad = true;
+        this.hideSpinnerAndShowAddButtons();
+      }
     );
   }
 
@@ -147,4 +161,19 @@ export class ProductManagerComponent implements OnInit {
   getProductsWithSearch(): Product[] {
     return this.products.filter(p => p.name.includes(this.searchOption));
   }
+
+  private hideSpinnerAndShowAddButtons() {
+    if (this.categoryIsLoad && this.productIsLoad) {
+      let spinner = document.getElementById("spinner");
+      let products = document.getElementById("products");
+      let categories = document.getElementById("categories");
+      let search = document.getElementById("search");
+      spinner?.remove();
+
+      products!.style.opacity = "1";
+      categories!.style.opacity = "1";
+      search!.style.marginTop = "0";
+    }
+  }
+
 }

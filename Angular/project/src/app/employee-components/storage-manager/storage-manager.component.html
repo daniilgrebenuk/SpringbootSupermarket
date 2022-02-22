@@ -3,8 +3,16 @@
   <input type="text" class="search" [(ngModel)]="search">
   <span class="close" (click)="clearSearch()"></span>
 </div>
-<div class="storage-wrap">
-  <div class="storage" *ngFor="let storage of filterStorage()">{{storage.location}}</div>
+
+<div id="spinner" class="lds-spinner">
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+</div>
+
+<div id="storage-wrap" class="storage-wrap">
+  <div [id]="storage.id" class="storage" *ngFor="let storage of filterStorage()" (click)="redirectToSupply(storage.id)">{{storage.location}}</div>
   <div class="storage add-button" (click)="addStorageOnClick()">Add</div>
 </div>
 </body>

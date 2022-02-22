@@ -7,6 +7,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  opacity: 0;
 }
 
 
@@ -22,16 +23,23 @@
   background-color: #DCDCDC;
 }
 
-.categories .add-button{
+
+.add-button{
   background-color: #00EB89;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.categories .add-button:hover{
+.add-button:hover{
   background-color: #00D77E;
   cursor: pointer;
 }
+
+
+
 .search-wrapper{
-  margin-top: 0;
+  margin-top: -4.5em;
 }
 
 .search {
@@ -56,6 +64,7 @@
 .products {
   display: flex;
   flex-wrap: wrap;
+  opacity: 0;
 }
 
 .products .product{

@@ -10,7 +10,8 @@ export const environment = {
   employeeApiUrl: 'http://localhost:8080/api/employee',
   productApiUrl: 'http://localhost:8080/api/product',
   categoryApiUrl: 'http://localhost:8080/api/category',
-  storageApiUrl: 'http://localhost:8080/api/storage'
+  storageApiUrl: 'http://localhost:8080/api/storage',
+  supplyApiUrl: 'http://localhost:8080/api/supply'
 };
 
 /*

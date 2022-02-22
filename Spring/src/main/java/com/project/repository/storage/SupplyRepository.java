@@ -18,4 +18,6 @@ public interface SupplyRepository extends JpaRepository<Supply, Long> {
 
   @Query(value = SQL_FOR_GET_ALL_BY_USERNAME, nativeQuery = true)
   List<Supply> getAllByUsername(String username);
+
+  List<Supply> findByStorageId(Long storageId);
 }

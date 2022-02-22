@@ -110,6 +110,11 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   }
 
   @Override
+  public List<Supply> findByStorageId(Long id) {
+    return supplyRepository.findByStorageId(id);
+  }
+
+  @Override
   public Storage getStorageById(Long id) {
     return storageRepository
         .findById(id)
