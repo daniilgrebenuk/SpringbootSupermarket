@@ -1,0 +1,19 @@
+<body class="container">
+<div class="search-wrapper">
+  <input type="text" class="search" [(ngModel)]="search">
+  <span class="close" (click)="clearSearch()"></span>
+</div>
+
+<div id="spinner" class="lds-spinner">
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+  <div></div><div></div><div></div>
+</div>
+
+<div id="supply-wrap" class="supply-wrap">
+  <div class="supply" *ngFor="let supply of filterSupply()">{{supply.date}}</div>
+  <div class="supply add-button" (click)="addSupplyOnClick()">Add</div>
+</div>
+</body>
+
