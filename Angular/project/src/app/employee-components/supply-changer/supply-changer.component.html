@@ -1,0 +1,45 @@
+<body class="container">
+<div class="supply-info">
+  <h1>Supply id: {{supply?.id}}</h1>
+  <h2>Date: {{supply?.date}}</h2>
+  <h2>Is accepted: {{supply?.accepted}}</h2>
+</div>
+
+<div class="employees-products">
+  <div class="employees">
+    <h2>Employee</h2>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Second name</th>
+        <th>Delete</th>
+      </tr>
+      <tr *ngFor="let employee of employees">
+        <th>{{employee.id}}</th>
+        <th>{{employee.name}}</th>
+        <th>{{employee.surname}}</th>
+      </tr>
+    </table>
+  </div>
+
+  <div class="products">
+    <div class="title">
+      <h2>Product</h2>
+    </div>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Product</th>
+        <th>Amount</th>
+        <th>Delete</th>
+      </tr>
+      <tr *ngFor="let product of products">
+        <th>{{product.id}}</th>
+        <th>{{product.name}}</th>
+        <th>{{product.amount}}</th>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
