@@ -26,7 +26,6 @@ public class ProductController {
 
 
   @GetMapping("/all")
-  //@PreAuthorize()
   public ResponseEntity<List<Product>> allProducts(){
     return ResponseEntity.ok(productService.findAll());
   }
