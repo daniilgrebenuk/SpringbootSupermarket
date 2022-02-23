@@ -8,4 +8,6 @@ export interface Product {
   name: string;
   category: Category;
   price: number;
+  amount: number;
 }
+
