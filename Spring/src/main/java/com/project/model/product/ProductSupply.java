@@ -2,9 +2,12 @@ package com.project.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.product.helper.ProductContainer;
-import com.project.model.storage.Supply;
 import com.project.model.product.keys.ProductSupplyKey;
-import lombok.*;
+import com.project.model.storage.Supply;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;

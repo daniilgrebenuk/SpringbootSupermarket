@@ -1,6 +1,5 @@
 package com.project.security;
 
-import com.project.model.credential.Permission;
 import com.project.security.jwt.JwtAuthenticationFilter;
 import com.project.security.jwt.JwtAuthorizationFilter;
 import com.project.security.jwt.JwtTokenProvider;

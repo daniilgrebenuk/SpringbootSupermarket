@@ -20,4 +20,6 @@ public interface SupplyService {
   boolean acceptSupplyById(Long supplyId);
 
   List<Supply> findByStorageId(Long id);
+
+  Supply findBySupplyId(Long id);
 }

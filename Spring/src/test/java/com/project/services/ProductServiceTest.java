@@ -3,8 +3,7 @@ package com.project.services;
 import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Category;
 import com.project.model.product.Product;
-import com.project.repository.product.CategoryRepository;
-import com.project.repository.product.DiscountRepository;
+import com.project.model.product.helper.ProductResponse;
 import com.project.repository.product.ProductRepository;
 import com.project.services.implementation.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -160,9 +159,24 @@ class ProductServiceTest {
   @DisplayName("<= find all product by supplyId =>")
   void findAllBySupplyId(){
     Long supplyId = 1L;
-    List<Product> products = IntStream
+    List<ProductResponse> products = IntStream
         .range(0,15)
-        .mapToObj(n->initProduct())
+        .mapToObj(n->new ProductResponse() {
+          @Override
+          public Long getId() {
+            return (long)(Math.random()*20);
+          }
+
+          @Override
+          public String getName() {
+            return null;
+          }
+
+          @Override
+          public Integer getAmount() {
+            return (int) (Math.random()*20);
+          }
+        })
         .collect(Collectors.toList());
 
     when(productRepository.findAllBySupplyId(any(Long.class))).thenReturn(products);

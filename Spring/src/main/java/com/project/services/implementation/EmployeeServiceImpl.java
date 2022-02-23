@@ -66,4 +66,9 @@ public class EmployeeServiceImpl implements EmployeeService {
   public List<Role> roles() {
     return userService.findAllRoles();
   }
+
+  @Override
+  public List<Employee> findAllBySupplyId(Long supplyId) {
+    return employeeRepository.findAllBySupplyId(supplyId);
+  }
 }

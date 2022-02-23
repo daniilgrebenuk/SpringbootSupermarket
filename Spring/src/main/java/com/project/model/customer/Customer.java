@@ -2,7 +2,10 @@ package com.project.model.customer;
 
 import com.project.model.credential.User;
 import com.project.model.product.Discount;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;

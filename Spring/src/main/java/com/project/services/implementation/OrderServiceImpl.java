@@ -1,10 +1,8 @@
 package com.project.services.implementation;
 
-import com.project.model.customer.Customer;
 import com.project.model.customer.Order;
 import com.project.model.product.Product;
 import com.project.model.product.ProductOrder;
-import com.project.model.storage.Storage;
 import com.project.repository.customer.OrderRepository;
 import com.project.repository.product.ProductOrderRepository;
 import com.project.services.CustomerService;

@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Product;
+import com.project.model.product.helper.ProductResponse;
 import com.project.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class ProductController {
   }
 
   @GetMapping("/all-in-supply/{supplyId}")
-  public ResponseEntity<List<Product>> getAllProductInSupply(@PathVariable Long supplyId){
+  public ResponseEntity<List<ProductResponse>> getAllProductInSupply(@PathVariable Long supplyId){
     return ResponseEntity.ok(productService.findAllBySupplyId(supplyId));
   }
 

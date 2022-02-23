@@ -22,6 +22,10 @@ export class ProductService {
     return this.http.get(`${this.productUrl}/all/category/${id}`);
   }
 
+  public getAllProductBySupplyId(supplyId: number): Observable<any>{
+    return this.http.get(`${this.productUrl}/all-in-supply/${supplyId}`);
+  }
+
   public addProduct(product: Product): Observable<any> {
     return this.http.post(`${this.productUrl}/add`, product);
   }

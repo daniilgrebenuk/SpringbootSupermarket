@@ -18,13 +18,17 @@ export class EmployeeService {
     return this.http.get(`${this.employeeUrl}/all`);
   }
 
+  public getAllBySupplyId(supplyId: number): Observable<any>{
+    return this.http.get(`${this.employeeUrl}/get/${supplyId}`);
+  }
+
   public add(employee: Employee): Observable<any> {
     return this.http.post(`${this.employeeUrl}/add`, employee);
   }
 
   public update(employee: Employee): Observable<any> {
     if(employee.id < 0){
-      throw new Error()
+      throw new Error();
     }
     return this.http.put(`${this.employeeUrl}/update`, employee);
   }

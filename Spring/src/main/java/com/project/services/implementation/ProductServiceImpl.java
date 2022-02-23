@@ -2,6 +2,7 @@ package com.project.services.implementation;
 
 import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Product;
+import com.project.model.product.helper.ProductResponse;
 import com.project.repository.product.ProductRepository;
 import com.project.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> findAllBySupplyId(Long supplyId) {
+  public List<ProductResponse> findAllBySupplyId(Long supplyId) {
     return productRepository.findAllBySupplyId(supplyId);
   }
 

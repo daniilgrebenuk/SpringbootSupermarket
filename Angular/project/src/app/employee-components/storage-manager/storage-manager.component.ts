@@ -55,7 +55,7 @@ export class StorageManagerComponent implements OnInit {
     return this.storages.filter(s=>s.location.includes(this.search));
   }
 
-  redirectToSupply(id: number) {
+  redirectToSupplyByStorageId(id: number) {
     this.router.navigate([`storage/${id}`]);
   }
 

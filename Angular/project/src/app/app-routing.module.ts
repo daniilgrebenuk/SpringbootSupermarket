@@ -6,6 +6,7 @@ import {ErrorPageComponent} from "./employee-components/error-page/error-page.co
 import {ProductManagerComponent} from "./employee-components/product-manager/product-manager.component";
 import {StorageManagerComponent} from "./employee-components/storage-manager/storage-manager.component";
 import {SupplyManagerComponent} from "./employee-components/supply-manager/supply-manager.component";
+import {SupplyChangerComponent} from "./employee-components/supply-changer/supply-changer.component";
 
 const routes: Routes = [
   {path: 'employee', component: EmployeeManagerComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'error', component: ErrorPageComponent},
   {path: 'product', component: ProductManagerComponent},
   {path: 'storage', component: StorageManagerComponent},
-  {path: 'storage/:idSupply', component: SupplyManagerComponent}
+  {path: 'storage/:idStorage', component: SupplyManagerComponent},
+  {path: 'supply/:idSupply', component: SupplyChangerComponent}
 ];
 
 @NgModule({

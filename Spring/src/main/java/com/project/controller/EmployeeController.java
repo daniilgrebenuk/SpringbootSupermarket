@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +30,16 @@ public class EmployeeController {
   //@PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<List<Employee>> getAllEmployee() {
     return ResponseEntity.ok(employeeService.findAll());
+  }
+
+  @GetMapping("/get/{supplyId}")
+  public ResponseEntity<?> getEmployeesBySupplyId(@PathVariable Long supplyId){
+    try {
+      return ResponseEntity.ok(employeeService.findAllBySupplyId(supplyId));
+    }catch (Exception e){
+      log.warn(e.getMessage());
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 
   @PostMapping("/add")

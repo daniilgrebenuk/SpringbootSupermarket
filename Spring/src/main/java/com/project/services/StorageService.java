@@ -1,6 +1,5 @@
 package com.project.services;
 
-import com.project.model.product.Product;
 import com.project.model.product.helper.ProductContainer;
 import com.project.model.storage.Storage;
 

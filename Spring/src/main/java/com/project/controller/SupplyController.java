@@ -21,6 +21,16 @@ public class SupplyController {
   private final SupplyService supplyService;
 
 
+  @GetMapping("/get/{id}")
+  public ResponseEntity<?> getSupplyById(@PathVariable Long id){
+    try{
+      return ResponseEntity.ok(supplyService.findBySupplyId(id));
+    }catch (Exception e){
+      log.warn(e.getMessage());
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
   @GetMapping("/get/current")
   //@PreAuthorize()
   public ResponseEntity<?> getAllSupplyForCurrentUser() {

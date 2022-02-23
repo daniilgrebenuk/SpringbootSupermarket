@@ -16,4 +16,6 @@ public interface EmployeeService {
   boolean delete(Long id);
 
   List<Role> roles();
+
+  List<Employee> findAllBySupplyId(Long supplyId);
 }

@@ -1,6 +1,7 @@
 package com.project.services;
 
 import com.project.model.product.Product;
+import com.project.model.product.helper.ProductResponse;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ProductService {
 
   boolean delete(Long id);
 
-  List<Product> findAllBySupplyId(Long supplyId);
+  List<ProductResponse> findAllBySupplyId(Long supplyId);
 
   List<Product> findAllByStorageId(Long storageId);
 

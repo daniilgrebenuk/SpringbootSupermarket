@@ -98,9 +98,7 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
 
   @Override
   public boolean acceptSupplyById(Long supplyId) {
-    Supply supply = supplyRepository
-        .findById(supplyId)
-        .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + supplyId));
+    Supply supply = findBySupplyId(supplyId);
     if (supply.isAccepted())
       return false;
     supply.setAccepted(true);
@@ -112,6 +110,13 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   @Override
   public List<Supply> findByStorageId(Long id) {
     return supplyRepository.findByStorageId(id);
+  }
+
+  @Override
+  public Supply findBySupplyId(Long id) {
+    return supplyRepository
+        .findById(id)
+        .orElseThrow(() -> new DataNotFoundException("Supply with current id doesn't exist: " + id));
   }
 
   @Override

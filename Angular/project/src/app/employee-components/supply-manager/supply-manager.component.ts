@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Supply} from "../../model/supply";
 import {SupplyService} from "../../service/company/supply.service";
 import {applySourceSpanToExpressionIfNeeded} from "@angular/compiler/src/output/output_ast";
@@ -18,6 +18,7 @@ export class SupplyManagerComponent implements OnInit {
 
   constructor(
     private rout: ActivatedRoute,
+    private router: Router,
     private supplyService: SupplyService
   ) {
   }
@@ -25,7 +26,7 @@ export class SupplyManagerComponent implements OnInit {
   ngOnInit(): void {
     this.rout.params.subscribe(
       param => {
-        this.storageId = param["idSupply"];
+        this.storageId = param["idStorage"];
         this.initSupply(this.storageId);
       }
     ).unsubscribe();
@@ -75,5 +76,9 @@ export class SupplyManagerComponent implements OnInit {
 
     spinner?.remove();
     supply!.style.opacity = "1";
+  }
+
+  redirectToSupplyById(id: number) {
+    this.router.navigate([`supply/${id}`]);
   }
 }

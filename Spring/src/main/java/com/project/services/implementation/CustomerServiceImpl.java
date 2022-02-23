@@ -4,7 +4,6 @@ import com.project.model.credential.User;
 import com.project.model.customer.Customer;
 import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Discount;
-import com.project.repository.credential.UserRepository;
 import com.project.repository.customer.CustomerRepository;
 import com.project.services.CustomerService;
 import com.project.services.DiscountService;

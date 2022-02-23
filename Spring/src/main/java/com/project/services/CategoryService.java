@@ -1,6 +1,5 @@
 package com.project.services;
 
-import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Category;
 
 import java.util.List;

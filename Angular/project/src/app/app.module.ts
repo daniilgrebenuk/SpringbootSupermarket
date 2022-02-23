@@ -12,6 +12,7 @@ import { ErrorPageComponent } from './employee-components/error-page/error-page.
 import { ProductManagerComponent } from './employee-components/product-manager/product-manager.component';
 import { StorageManagerComponent } from './employee-components/storage-manager/storage-manager.component';
 import { SupplyManagerComponent } from './employee-components/supply-manager/supply-manager.component';
+import { SupplyChangerComponent } from './employee-components/supply-changer/supply-changer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SupplyManagerComponent } from './employee-components/supply-manager/sup
     ErrorPageComponent,
     ProductManagerComponent,
     StorageManagerComponent,
-    SupplyManagerComponent
+    SupplyManagerComponent,
+    SupplyChangerComponent
   ],
   imports: [
     BrowserModule,

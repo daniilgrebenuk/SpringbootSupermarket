@@ -12,7 +12,7 @@
 </div>
 
 <div id="supply-wrap" class="supply-wrap">
-  <div class="supply" *ngFor="let supply of filterSupply()">{{supply.date}}</div>
+  <div class="supply" *ngFor="let supply of filterSupply()" (click)="redirectToSupplyById(supply.id)">{{supply.date}}</div>
   <div class="supply add-button" (click)="addSupplyOnClick()">Add</div>
 </div>
 </body>

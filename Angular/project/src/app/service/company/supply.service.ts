@@ -17,7 +17,11 @@ export class SupplyService {
     return this.http.get(`${this.supplyUrl}/all-by-storage-id/${id}`);
   }
 
-  addSupply(storageId: number, date: string): Observable<any> {
+  public getSupplyBySupplyId(id: number): Observable<any> {
+    return this.http.get(`${this.supplyUrl}/get/${id}`);
+  }
+
+  public addSupply(storageId: number, date: string): Observable<any> {
     return this.http.post(`${this.supplyUrl}/add`, {storageId: storageId, date: date});
   }
 }
