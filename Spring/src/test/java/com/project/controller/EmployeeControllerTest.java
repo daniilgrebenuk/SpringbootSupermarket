@@ -120,8 +120,7 @@ class EmployeeControllerTest {
             content().string(containsString("\"phone\":\"Enter phone\"")),
             content().string(containsString("\"salary\":\"Enter salary\"")),
             content().string(containsString("\"enrollmentDate\":\"Enter enrollment date\"")),
-            content().string(containsString("\"contractInMonth\":\"Enter the duration of the contract in months\"")),
-            content().string(containsString("\"user\":\"Enter userId and Role\""))
+            content().string(containsString("\"contractInMonth\":\"Enter the duration of the contract in months\""))
         );
   }
 
@@ -235,8 +234,7 @@ class EmployeeControllerTest {
             content().string(containsString("\"phone\":\"Enter phone\"")),
             content().string(containsString("\"salary\":\"Enter salary\"")),
             content().string(containsString("\"enrollmentDate\":\"Enter enrollment date\"")),
-            content().string(containsString("\"contractInMonth\":\"Enter the duration of the contract in months\"")),
-            content().string(containsString("\"user\":\"Enter userId and Role\""))
+            content().string(containsString("\"contractInMonth\":\"Enter the duration of the contract in months\""))
         );
   }
 
