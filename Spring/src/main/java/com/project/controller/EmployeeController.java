@@ -69,7 +69,7 @@ public class EmployeeController {
     try {
       employee = employeeService.update(employee);
     } catch (DataNotFoundException | IllegalArgumentException e) {
-      log.warn("Warn: ", e);
+      log.warn(e.getMessage());
       return ResponseEntity.badRequest().body(e.getMessage());
     }
 
@@ -88,7 +88,7 @@ public class EmployeeController {
     try {
       employeeService.delete(id);
     } catch (DataNotFoundException e) {
-      log.warn("", e);
+      log.warn(e.getMessage());
       return ResponseEntity.badRequest().body(e.getMessage());
     }
     return ResponseEntity.ok().build();

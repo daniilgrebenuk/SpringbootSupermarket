@@ -1,6 +1,9 @@
 package com.project.model.credential;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.model.customer.Customer;
+import com.project.model.employee.Employee;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -24,16 +28,37 @@ import java.util.Objects;
     isGetterVisibility = JsonAutoDetect.Visibility.NONE
 )
 public class User implements UserDetails {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column(unique = true)
   private String username;
+
   private String password;
   private Boolean isNonExpired;
 
   @ManyToOne
   @JoinColumn(nullable = false)
   private Role role;
+
+  @OneToOne(mappedBy = "user")
+  @JsonIgnore
+  @ToString.Exclude
+  private Employee employee;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  @JsonIgnore
+  @ToString.Exclude
+  private Customer customer;
+
+  @PreRemove
+  protected void preRemove(){
+    if (employee != null)
+      employee.setUser(null);
+  }
+
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

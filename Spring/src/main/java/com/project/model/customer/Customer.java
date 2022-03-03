@@ -25,7 +25,7 @@ public class Customer {
   private String name;
   private String mobileNumber;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne
   @JoinColumn(nullable = false)
   private User user;
 

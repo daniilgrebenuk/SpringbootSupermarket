@@ -47,9 +47,7 @@ public class Employee implements Serializable {
   private Integer contractInMonth;
 
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(nullable = false)
-  @NotNull(message = "Enter userId and Role")
+  @OneToOne
   private User user;
 
   @Override
