@@ -12,7 +12,7 @@ public interface SupplyRepository extends JpaRepository<Supply, Long> {
       "SELECT s.* " +
       "FROM supply s JOIN supply_employee se ON s.id = se.supply_id " +
                     "JOIN employee e ON e.id = se.employee_id " +
-                    "JOIN user u ON e.user_id = u.id " +
+                    "JOIN users u ON e.user_id = u.id " +
       "WHERE u.username = ?1";
 
 
