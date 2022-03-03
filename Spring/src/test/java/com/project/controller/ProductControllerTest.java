@@ -42,6 +42,7 @@ class ProductControllerTest {
   private MockMvc mockMvc;
   private final ObjectMapper mapper = new ObjectMapper();
   private Product correctProduct;
+  private long counter;
 
   @BeforeEach
   void setUp() {
@@ -49,16 +50,17 @@ class ProductControllerTest {
 
 
     Category category = new Category(1L, "Vegetables");
-    correctProduct = new Product(null, "Tomato", category, List.of(), 200D);
+    correctProduct = initProduct(category);
+    counter = 0;
   }
 
   @Test
   @DisplayName("<= HttpStatus.OK and correct data when use allProduct =>")
   void allProduct() throws Exception {
     Category category = new Category(1L, "Vegetables");
-    Product product1 = new Product(1L, "Tomato1", category, List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, List.of(), 200D);
-    Product product3 = new Product(3L, "Tomato3", category, List.of(), 200D);
+    Product product1 = initProduct(category);
+    Product product2 = initProduct(category);
+    Product product3 = initProduct(category);
 
     when(service.findAll()).thenReturn(Arrays.asList(product1, product2, product3));
 
@@ -78,9 +80,9 @@ class ProductControllerTest {
   void allProductByCategoryId() throws Exception {
     Category category = new Category(1L, "Vegetables");
     Category categoryForAnotherProduct = new Category(2L, "Thing");
-    Product product1 = new Product(1L, "Tomato1", category, List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category,  List.of(), 200D);
-    Product productWithAnotherCategory = new Product(3L, "Tomato3", categoryForAnotherProduct,  List.of(), 200D);
+    Product product1 = initProduct(category);
+    Product product2 = initProduct(category);
+    Product productWithAnotherCategory = initProduct(categoryForAnotherProduct);
 
     when(service.findAllByCategoryId(any(Long.class))).thenReturn(Arrays.asList(product1, product2));
 
@@ -200,6 +202,10 @@ class ProductControllerTest {
             status().isBadRequest(),
             content().string(containsString("Unable to save Product without Id"))
         );
+  }
+
+  private Product initProduct(Category category) {
+    return new Product(counter++, "Tomato" + counter, category, List.of(), List.of(), List.of(), 200D);
   }
 
 }

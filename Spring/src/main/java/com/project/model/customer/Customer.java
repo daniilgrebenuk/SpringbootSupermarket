@@ -1,5 +1,6 @@
 package com.project.model.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.model.credential.User;
 import com.project.model.product.Discount;
 import lombok.Getter;
@@ -31,10 +32,16 @@ public class Customer {
 
   @ManyToMany
   @ToString.Exclude
+  @JsonIgnore
   private List<Discount> discounts;
 
-  public boolean addDiscount(Discount discount){
-    return discounts.add(discount);
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<Order> orders;
+
+  public void addDiscount(Discount discount) {
+    discounts.add(discount);
   }
 
   @Override

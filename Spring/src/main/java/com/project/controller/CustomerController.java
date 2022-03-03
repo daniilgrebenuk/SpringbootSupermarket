@@ -53,4 +53,25 @@ public class CustomerController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
+
+  @PutMapping("/update")
+  public ResponseEntity<?> updateCustomer(@RequestBody Customer customer){
+    try {
+      return ResponseEntity.ok(customerService.update(customer));
+    }catch (Exception e){
+      log.warn(e.getMessage());
+      return ResponseEntity.ok(e.getMessage());
+    }
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteById(@PathVariable Long id){
+    try {
+      customerService.deleteById(id);
+      return ResponseEntity.ok("Successfully deleted!");
+    }catch (Exception e){
+      log.warn(e.getMessage());
+      return ResponseEntity.ok(e.getMessage());
+    }
+  }
 }

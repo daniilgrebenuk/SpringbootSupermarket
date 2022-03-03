@@ -65,7 +65,6 @@ public class EmployeeController {
     if (errors.hasErrors()) {
       return getResponseEntityWithErrors(errors);
     }
-
     try {
       employee = employeeService.update(employee);
     } catch (DataNotFoundException | IllegalArgumentException e) {

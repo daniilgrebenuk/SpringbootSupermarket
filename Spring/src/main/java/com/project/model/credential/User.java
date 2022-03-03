@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 
+@Table(name = "Users")
 @Entity
 @Getter
 @Setter

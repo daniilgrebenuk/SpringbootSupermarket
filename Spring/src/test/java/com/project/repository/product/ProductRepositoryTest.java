@@ -72,10 +72,10 @@ class ProductRepositoryTest {
   }
 
   Product setUpProduct(Category category) {
-    return productRepository.save(new Product(null, "Tomato" + (counter++), category, List.of(), 200D));
+    return productRepository.save(new Product(null, "Tomato" + (counter++), category, List.of(), List.of(), List.of(), 200D));
   }
 
-  Category setUpCategory(String name){
+  Category setUpCategory(String name) {
     return categoryRepository.save(new Category(null, name));
   }
 }

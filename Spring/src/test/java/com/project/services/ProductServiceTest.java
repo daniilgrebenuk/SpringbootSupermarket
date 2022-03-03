@@ -48,7 +48,7 @@ class ProductServiceTest {
   @Test
   @DisplayName("<= find Product with correct id =>")
   void findProductWithCorrectId() {
-    Product product = new Product(1L, null, null , null, null);
+    Product product = initProduct(null);
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(product));
 
     assertAll(
@@ -69,9 +69,9 @@ class ProductServiceTest {
   @DisplayName("<= find all Products =>")
   void findAll() {
     Category category = new Category(1L, "Vegetables");
-    Product product1 = new Product(1L, "Tomato1", category, List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, List.of(), 200D);
-    Product product3 = new Product(3L, "Tomato3", category, List.of(), 200D);
+    Product product1 = initProduct(category);
+    Product product2 = initProduct(category);
+    Product product3 = initProduct(category);
     List<Product> products = Arrays.asList(product1, product2, product3);
     when(productRepository.findAll()).thenReturn(products);
     assertThat(productService.findAll()).isEqualTo(products);
@@ -80,7 +80,7 @@ class ProductServiceTest {
   @Test
   @DisplayName("<= add Product =>")
   void addProduct() {
-    Product product = new Product(1L, null, null, null, null);
+    Product product = initProduct(null);
     when(productRepository.save(any(Product.class))).thenReturn(product);
     assertThat(productService.add(product)).isEqualTo(product);
   }
@@ -88,7 +88,7 @@ class ProductServiceTest {
   @Test
   @DisplayName("<= update correct Product with Id =>")
   void updateCorrectProduct() {
-    Product product = new Product(1L, null, null, null, null);
+    Product product = initProduct(null);
 
     when(productRepository.save(any(Product.class))).thenReturn(product);
     assertAll(
@@ -110,9 +110,9 @@ class ProductServiceTest {
   @DisplayName("<= find all product by Category.id =>")
   void allProductByCategoryId() {
     Category category = new Category(1L, "Vegetables");
-    Product product1 = new Product(1L, "Tomato1", category, List.of(), 200D);
-    Product product2 = new Product(2L, "Tomato2", category, List.of(), 200D);
-    Product product3 = new Product(3L, "Tomato3", category, List.of(), 200D);
+    Product product1 = initProduct(category);
+    Product product2 = initProduct(category);
+    Product product3 = initProduct(category);
     when(productRepository.findAllByCategoryId(any(Long.class))).thenReturn(Arrays.asList(product1, product2, product3));
 
     List<Product> products = productService.findAllByCategoryId(1L);
@@ -138,7 +138,7 @@ class ProductServiceTest {
   @Test
   @DisplayName("<= delete Product with correct Id")
   void deleteProductWithCorrectId() {
-    Product product = initProduct();
+    Product product = initProduct(null);
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(product));
 
     assertAll(
@@ -190,7 +190,7 @@ class ProductServiceTest {
     Long storageId = 1L;
     List<Product> products = IntStream
         .range(0,15)
-        .mapToObj(n->initProduct())
+        .mapToObj(n->initProduct(null))
         .collect(Collectors.toList());
 
     when(productRepository.findAllByStorageId(any(Long.class))).thenReturn(products);
@@ -198,10 +198,12 @@ class ProductServiceTest {
     assertThat(productService.findAllByStorageId(storageId)).isEqualTo(products);
   }
 
-  private Product initProduct() {
+  private Product initProduct(Category category) {
     return new Product(
         counter++,
         "" + counter,
+        category,
+        null,
         null,
         null,
         (double) counter);

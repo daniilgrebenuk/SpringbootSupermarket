@@ -31,10 +31,22 @@ public class Product {
   private Category category;
 
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   private List<ProductOrder> orders;
+
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<ProductStorage> productStorages;
+
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<ProductSupply> productSupplies;
+
+
 
   @Column(nullable = false)
   @NotNull(message = "The product must have a price!")
