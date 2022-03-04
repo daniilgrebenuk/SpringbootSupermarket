@@ -143,5 +143,14 @@ public class SupplyController {
     return ResponseEntity.ok().build();
   }
 
-
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteSupplyById(@PathVariable Long id){
+    try {
+      this.supplyService.deleteSupplyById(id);
+      return ResponseEntity.ok("Successfully deleted!");
+    } catch (Exception e){
+      log.warn(e.getMessage());
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }

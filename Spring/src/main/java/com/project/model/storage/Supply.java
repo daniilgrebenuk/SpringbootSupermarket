@@ -30,10 +30,10 @@ public class Supply {
   @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
   private LocalDate date;
 
-  @OneToMany(mappedBy = "supplyProduct")
+  @OneToMany(mappedBy = "supplyProduct", cascade = CascadeType.ALL)
   private List<ProductSupply> products;
 
-  @OneToMany(mappedBy = "supplyEmployee")
+  @OneToMany(mappedBy = "supplyEmployee", cascade = CascadeType.ALL)
   private List<SupplyEmployee> employees;
 
   private boolean accepted;

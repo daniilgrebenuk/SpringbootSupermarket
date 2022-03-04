@@ -22,4 +22,6 @@ public interface SupplyService {
   List<Supply> findByStorageId(Long id);
 
   Supply findBySupplyId(Long id);
+
+  void deleteSupplyById(Long id);
 }

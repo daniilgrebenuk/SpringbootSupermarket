@@ -120,6 +120,11 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
   }
 
   @Override
+  public void deleteSupplyById(Long id) {
+    this.supplyRepository.deleteById(id);
+  }
+
+  @Override
   public Storage getStorageById(Long id) {
     return storageRepository
         .findById(id)
