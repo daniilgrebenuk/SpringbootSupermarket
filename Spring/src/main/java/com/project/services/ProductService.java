@@ -17,7 +17,7 @@ public interface ProductService {
 
   List<Product> findAllByCategoryId(Long id);
 
-  boolean delete(Long id);
+  boolean deleteById(Long id);
 
   List<ProductResponse> findAllBySupplyId(Long supplyId);
 

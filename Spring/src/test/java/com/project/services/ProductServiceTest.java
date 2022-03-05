@@ -142,8 +142,8 @@ class ProductServiceTest {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(product));
 
     assertAll(
-        () -> assertDoesNotThrow(() -> productService.delete(1L)),
-        () -> assertThat(productService.delete(1L)).isTrue()
+        () -> assertDoesNotThrow(() -> productService.deleteById(1L)),
+        () -> assertThat(productService.deleteById(1L)).isTrue()
     );
   }
 
@@ -152,7 +152,7 @@ class ProductServiceTest {
   void deleteProductThatDoesntExist() {
     when(productRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-    assertThatThrownBy(() -> productService.delete(1L)).isInstanceOf(DataNotFoundException.class);
+    assertThatThrownBy(() -> productService.deleteById(1L)).isInstanceOf(DataNotFoundException.class);
   }
 
   @Test

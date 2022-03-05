@@ -23,38 +23,39 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {
+
   private final ProductService productService;
 
 
   @GetMapping("/all")
-  public ResponseEntity<List<Product>> allProducts(){
+  public ResponseEntity<List<Product>> allProducts() {
     return ResponseEntity.ok(productService.findAll());
   }
 
   @GetMapping("/all/category/{id}")
-  public ResponseEntity<?> allProductsByCategoryId(@PathVariable Long id){
-    try{
-      List<Product> products= productService.findAllByCategoryId(id);
+  public ResponseEntity<?> allProductsByCategoryId(@PathVariable Long id) {
+    try {
+      List<Product> products = productService.findAllByCategoryId(id);
       return ResponseEntity.ok(products);
-    }catch (DataNotFoundException e){
+    } catch (DataNotFoundException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
   @GetMapping("/all-in-supply/{supplyId}")
-  public ResponseEntity<List<ProductResponse>> getAllProductInSupply(@PathVariable Long supplyId){
+  public ResponseEntity<List<ProductResponse>> getAllProductInSupply(@PathVariable Long supplyId) {
     return ResponseEntity.ok(productService.findAllBySupplyId(supplyId));
   }
 
   @GetMapping("/all-in-storage/{storageId}")
-  public ResponseEntity<List<Product>> getAllProductInStorage(@PathVariable Long storageId){
+  public ResponseEntity<List<Product>> getAllProductInStorage(@PathVariable Long storageId) {
     return ResponseEntity.ok(productService.findAllByStorageId(storageId));
   }
 
   @PostMapping("/add")
   //@PreAuthorize()
-  public ResponseEntity<?> createNewProduct(@RequestBody @Valid Product product, Errors errors){
-    if (errors.hasErrors()){
+  public ResponseEntity<?> createNewProduct(@RequestBody @Valid Product product, Errors errors) {
+    if (errors.hasErrors()) {
       return getResponseEntityWithErrors(errors);
     }
     return new ResponseEntity<>(productService.add(product), HttpStatus.CREATED);
@@ -62,8 +63,8 @@ public class ProductController {
 
   @PutMapping("/update")
   //@PreAuthorize()
-  public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product, Errors errors){
-    if (errors.hasErrors()){
+  public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product, Errors errors) {
+    if (errors.hasErrors()) {
       return getResponseEntityWithErrors(errors);
     }
     try {
@@ -74,20 +75,28 @@ public class ProductController {
     return ResponseEntity.ok(product);
   }
 
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteById(@PathVariable Long id) {
+    try {
+      return ResponseEntity.ok(productService.deleteById(id) ? "Successfully deleted!" : "Error!");
+    } catch (Exception e) {
+      log.warn(e.getMessage());
+      return ResponseEntity.ok(e.getMessage());
+    }
+  }
 
 
-
-  private ResponseEntity<Map<String, String>> getResponseEntityWithErrors(Errors errors){
+  private ResponseEntity<Map<String, String>> getResponseEntityWithErrors(Errors errors) {
     return new ResponseEntity<>(
         errors
             .getFieldErrors()
             .stream()
             .collect(Collectors.toMap(
-                    FieldError::getField,
-                    f-> Optional
-                        .ofNullable(f.getDefaultMessage())
-                        .orElse(f.getObjectName()))
-                ),
+                FieldError::getField,
+                f -> Optional
+                    .ofNullable(f.getDefaultMessage())
+                    .orElse(f.getObjectName()))
+            ),
         HttpStatus.BAD_REQUEST
     );
   }
