@@ -16,4 +16,6 @@ public interface StorageService {
   Storage addProductToStorage(Long storageId, ProductContainer product);
 
   Storage addAllProductToStorage(Long storageId,  List<? extends ProductContainer> products);
+
+  void deleteStorageById(Long id);
 }

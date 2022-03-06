@@ -29,7 +29,7 @@ public class Order {
   @ManyToOne
   private Storage storage;
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
   private List<ProductOrder> products;
 
   @ManyToMany

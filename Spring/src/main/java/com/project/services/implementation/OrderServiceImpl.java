@@ -1,6 +1,7 @@
 package com.project.services.implementation;
 
 import com.project.model.customer.Order;
+import com.project.model.exception.DataNotFoundException;
 import com.project.model.product.Product;
 import com.project.model.product.ProductOrder;
 import com.project.repository.customer.OrderRepository;
@@ -47,6 +48,18 @@ public class OrderServiceImpl implements OrderService {
     });
 
     return order;
+  }
+
+  @Override
+  public void deleteById(Long id) {
+    this.orderRepository.deleteById(id);
+  }
+
+  @Override
+  public Order findOrderById(Long id) {
+    return this.orderRepository
+        .findById(id)
+        .orElseThrow(() -> new DataNotFoundException("Order with current id doesn't exist: " + id));
   }
 
   @Override

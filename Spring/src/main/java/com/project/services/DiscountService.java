@@ -12,7 +12,7 @@ public interface DiscountService {
 
   Discount createDiscountForCategory(Long categoryId, Integer discount);
 
-  void deleteDiscount(Long discountId);
+  void deleteDiscountById(Long discountId);
 
   List<Discount> findAll();
 }

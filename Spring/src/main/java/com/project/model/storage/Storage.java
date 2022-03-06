@@ -23,10 +23,15 @@ public class Storage {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany(mappedBy = "storage")
+  @OneToMany(mappedBy = "storage", cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   private List<ProductStorage> products;
+
+  @OneToMany(mappedBy = "storage", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<Supply> supplies;
 
   private String location;
 

@@ -159,6 +159,11 @@ public class CompletedStorageServiceImpl implements SupplyService, StorageServic
     return addAllProductToStorage(storage, products);
   }
 
+  @Override
+  public void deleteStorageById(Long id) {
+    this.storageRepository.deleteById(id);
+  }
+
   private Storage addAllProductToStorage(Storage storage, List<? extends ProductContainer> products) {
     products
         .stream()

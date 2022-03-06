@@ -146,4 +146,23 @@ class EmployeeServiceTest {
 
     assertThat(employeeService.roles()).isEqualTo(roles);
   }
+
+  @Test
+  @DisplayName("<= find all by Supply id =>")
+  void findAllBySupplyId(){
+    Long supplyId = 1L;
+    Employee employee1 = new Employee(1L, "Bob", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, null);
+    Employee employee2 = new Employee(2L, "Bob", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, null);
+    Employee employee3 = new Employee(3L, "Bob", "Bob", 213L, "123123", "123213", 11313, LocalDate.now(), 2, null);
+
+
+    when(employeeRepository.findAllBySupplyId(any(Long.class))).thenReturn(Arrays.asList(employee1, employee2, employee3));
+
+    assertAll(
+        () -> assertThat(employeeService.findAllBySupplyId(supplyId).size()).isEqualTo(3),
+        () -> assertThat(employeeService.findAllBySupplyId(supplyId).get(0)).isEqualTo(employee1),
+        () -> assertThat(employeeService.findAllBySupplyId(supplyId).get(1)).isEqualTo(employee2),
+        () -> assertThat(employeeService.findAllBySupplyId(supplyId).get(2)).isEqualTo(employee3)
+    );
+  }
 }

@@ -88,8 +88,8 @@ class CategoryServiceTest {
     when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(new Category(1L, "123")));
 
     assertAll(
-        () -> assertDoesNotThrow(() -> categoryService.delete(1L)),
-        () -> assertThat(categoryService.delete(1L)).isTrue()
+        () -> assertDoesNotThrow(() -> categoryService.deleteById(1L)),
+        () -> assertThat(categoryService.deleteById(1L)).isTrue()
     );
   }
 
@@ -98,6 +98,6 @@ class CategoryServiceTest {
   void deleteCategoryThatDoesntExist(){
     when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-    assertThatThrownBy(() -> categoryService.delete(1L)).isInstanceOf(DataNotFoundException.class);
+    assertThatThrownBy(() -> categoryService.deleteById(1L)).isInstanceOf(DataNotFoundException.class);
   }
 }

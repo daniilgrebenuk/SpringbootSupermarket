@@ -19,6 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -167,6 +168,14 @@ public class StorageServiceTest {
         () -> assertThat(toTest).isEqualTo(storage),
         () -> assertThat(toTest.getProducts()).isEqualTo(toCheck)
     );
+  }
+
+  @Test
+  @DisplayName("<= delete Storage by id =>")
+  void deleteStorageById(){
+    Long storageId = 1L;
+    storageService.deleteStorageById(storageId);
+    Mockito.verify(storageRepository).deleteById(storageId);
   }
 
 

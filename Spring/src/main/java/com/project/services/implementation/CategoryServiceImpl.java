@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     return categoryRepository.save(category);
   }
 
-  public boolean delete(Long id) {
+  public boolean deleteById(Long id) {
     Category category = findById(id);
     categoryRepository.delete(category);
     return true;

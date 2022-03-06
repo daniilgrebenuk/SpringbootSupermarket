@@ -52,7 +52,7 @@ public class DiscountServiceImpl implements DiscountService {
   }
 
   @Override
-  public void deleteDiscount(Long discountId) {
+  public void deleteDiscountById(Long discountId) {
     Discount discount = findById(discountId);
     discountRepository.delete(discount);
   }

@@ -18,15 +18,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -103,18 +104,18 @@ public class UserServiceTest {
 
   @Test
   @DisplayName("<= reg new user when role doesn't exists =>")
-  void regNewUserWhenRoleDoesntExist(){
+  void regNewUserWhenRoleDoesntExist() {
     when(roleRepository.findByAuthority(any(Authority.class))).thenReturn(Optional.empty());
 
     assertThatThrownBy(
-        ()->userService.regNewUserFromRegistrationForm(new RegistrationForm("",""))
+        () -> userService.regNewUserFromRegistrationForm(new RegistrationForm("", ""))
     ).isInstanceOf(DataNotFoundException.class);
   }
 
   @Test
   @DisplayName("<= find all roles =>")
-  void findAllRoles(){
-    List<Role> roles = Arrays.stream(Authority.values()).map(a->new Role(counter++, a)).collect(Collectors.toList());
+  void findAllRoles() {
+    List<Role> roles = Arrays.stream(Authority.values()).map(a -> new Role(counter++, a)).collect(Collectors.toList());
 
     when(roleRepository.findAll()).thenReturn(roles);
     assertThat(userService.findAllRoles()).isEqualTo(roles);
@@ -122,7 +123,7 @@ public class UserServiceTest {
 
   @Test
   @DisplayName("<= find user by id =>")
-  void findUserById(){
+  void findUserById() {
     User user = initUser();
 
     when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
@@ -131,12 +132,47 @@ public class UserServiceTest {
 
   @Test
   @DisplayName("<= find user by id when doesn't exists =>")
-  void findUserByIdWhenDoesntExists(){
+  void findUserByIdWhenDoesntExists() {
     Long userId = 1L;
     when(userRepository.findById(any(Long.class))).thenReturn(Optional.empty());
     assertThatThrownBy(
-        ()->userService.findUserById(userId)
+        () -> userService.findUserById(userId)
     ).isInstanceOf(DataNotFoundException.class);
+  }
+
+  @Test
+  @DisplayName("<= find all Users =>")
+  void findAllUsers() {
+    List<User> users = IntStream
+        .range(0, 15)
+        .mapToObj(n -> initUser())
+        .collect(Collectors.toList());
+
+    when(this.userRepository.findAll()).thenReturn(users);
+
+    assertThat(this.userService.findAll()).isEqualTo(users);
+  }
+
+  @Test
+  @DisplayName("<= delete User by id =>")
+  void deleteUserById() {
+    User user = initUser();
+    when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
+    assertAll(
+        ()->assertDoesNotThrow(() -> userService.deleteUserById(user.getId()))
+    );
+  }
+
+  @Test
+  @DisplayName("<= update User =>")
+  void updateUser(){
+    User user = initUser();
+    when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
+    when(userRepository.save(any(User.class))).thenReturn(user);
+    assertAll(
+        ()->assertDoesNotThrow(() -> userService.update(user)),
+        ()->assertThat(userService.update(user)).isEqualTo(user)
+    );
   }
 
 

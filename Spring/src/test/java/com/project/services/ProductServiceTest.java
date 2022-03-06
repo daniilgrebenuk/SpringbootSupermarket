@@ -198,6 +198,20 @@ class ProductServiceTest {
     assertThat(productService.findAllByStorageId(storageId)).isEqualTo(products);
   }
 
+  @Test
+  @DisplayName("<= find all by Order id =>")
+  void findAllByOrderId(){
+    Long orderId = 1L;
+    List<Product> products = IntStream
+        .range(0,15)
+        .mapToObj(n->initProduct(null))
+        .collect(Collectors.toList());
+
+    when(productRepository.findAllByOrderId(any(Long.class))).thenReturn(products);
+
+    assertThat(productService.findAllByOrderId(orderId)).isEqualTo(products);
+  }
+
   private Product initProduct(Category category) {
     return new Product(
         counter++,

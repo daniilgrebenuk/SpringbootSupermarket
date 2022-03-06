@@ -69,13 +69,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> findAll() {
-    return userRepository.findAll();
+    return this.userRepository.findAll();
   }
 
   @Override
   public void deleteUserById(Long id) {
-
-    this.userRepository.delete(findUserById(id));
+    User user = this.findUserById(id);
+    this.userRepository.delete(user);
   }
 
   @Override

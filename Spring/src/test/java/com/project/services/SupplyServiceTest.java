@@ -22,6 +22,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -254,6 +255,29 @@ public class SupplyServiceTest {
 
     assertThat(supplyService.acceptSupplyById(supply.getId())).isFalse();
   }
+
+  @Test
+  @DisplayName("<= delete Supply by id =>")
+  void deleteSupplyById(){
+    Long supplyId = 1L;
+    supplyService.deleteSupplyById(supplyId);
+    Mockito.verify(supplyRepository).deleteById(supplyId);
+  }
+
+  @Test
+  @DisplayName("<= find Supply by Storage id =>")
+  void findSupplyByStorageId(){
+    Storage storage = initStorage();
+
+    List<Supply> supplies = IntStream
+        .range(0,15)
+        .mapToObj(n->initSupply(storage))
+        .collect(Collectors.toList());
+
+    when(supplyRepository.findByStorageId(any(Long.class))).thenReturn(supplies);
+    assertThat(supplyService.findByStorageId(storage.getId())).isEqualTo(supplies);
+  }
+
 
   private Storage initStorage(){
     Storage storage = new Storage();
